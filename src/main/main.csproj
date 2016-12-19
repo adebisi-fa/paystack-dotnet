@@ -51,8 +51,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Initialize.cs" />
+    <Compile Include="Entities\Verify.cs" />
     <Compile Include="IPayStackApi.cs" />
-    <Compile Include="PayStack.cs" />
+    <Compile Include="PayStackApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
