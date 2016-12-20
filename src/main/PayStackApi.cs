@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using XtremeIT.Library.Pins;
 
 namespace PayStack.Net
@@ -11,12 +13,14 @@ namespace PayStack.Net
     {
 
         private readonly HttpClient _client;
-        private readonly JsonSerializerSettings _jsonSerializerSettings;
+        internal static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate
+        };
 
         public PayStackApi(string secretKey)
         {
-            _jsonSerializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-               
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             _client = new HttpClient {BaseAddress = new Uri("https://api.paystack.co/")};
             _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", secretKey);
@@ -25,7 +29,6 @@ namespace PayStack.Net
 
         public InitializeResponse Initialize (InitializeRequest request)
         {
-            request.Reference = $"{request.Reference};{Generator.NewPin(new GeneratorSettings { Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7 })}";
             return Post<InitializeResponse, InitializeRequest>("transaction/initialize", request);
         }
 
@@ -36,7 +39,11 @@ namespace PayStack.Net
 
         TR Post<TR, T>(string relativeUrl, T request)
         {
-            var requestBody = JsonConvert.SerializeObject(request, Formatting.Indented, _jsonSerializerSettings);
+            (request as IPreparable)?.Prepare();
+
+            var requestBody = JsonConvert.SerializeObject(request, Formatting.Indented, SerializerSettings);
+            string filename = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().EscapedCodeBase.Substring("file:///".Length).Replace('/', '\\')) + "\\request_log.txt";
+            File.AppendAllText(filename, requestBody);
             return JsonConvert.DeserializeObject<TR>(
                 _client.PostAsync(
                     relativeUrl,

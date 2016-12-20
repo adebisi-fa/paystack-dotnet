@@ -1,9 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using XtremeIT.Library.Pins;
 
 namespace PayStack.Net
 {
-    public class InitializeRequest
+    public class InitializeRequest : IPreparable
     {
+        public InitializeRequest()
+        {
+            CustomFields = new List<CustomField>();
+            MetadataObject = new Dictionary<string, object>();
+        }
+
         public string Reference { get; set; }
 
         [JsonProperty("amount")]
@@ -20,7 +28,22 @@ namespace PayStack.Net
         [JsonProperty("transaction_charge")]
         public int TransactionCharge { get; set; }
 
+        [JsonIgnore]
+        public List<CustomField> CustomFields { get; set; }
+
+        [JsonIgnore]
+        public Dictionary<string, object> MetadataObject { get; set; }
+
+        public string Metadata { get; set; }
+
         public string Bearer { get; set; }
+
+        public void Prepare()
+        {
+            MetadataObject["custom_fields"] = CustomFields.ToArray();
+            Metadata = JsonConvert.SerializeObject(MetadataObject, PayStackApi.SerializerSettings);
+            Reference = $"{Reference};{Generator.NewPin(new GeneratorSettings { Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7 })}";
+        }
     }
 
     public class InitializeResponse
@@ -39,5 +62,32 @@ namespace PayStack.Net
         public string AccessCode { get; set; }
 
         public string Reference { get; set; }
+    }
+
+    public class CustomField
+    {
+        public CustomField(string displayName, string variableName, string value)
+        {
+            DisplayName = displayName;
+            VariableName = variableName;
+            Value = value;
+        }
+
+        [JsonProperty("display_name")]
+        public string DisplayName { get; set; }
+
+        [JsonProperty("variable_name")]
+        public string VariableName { get; set; }
+
+        public string Value { get; set; }
+
+        public static CustomField From(string displayName, string variableName, string value)
+            => new CustomField(displayName, variableName, value);
+    }
+
+    public static class PayStackChargesBearer
+    {
+        public static string Account = nameof(Account).ToLower();
+        public static string SubAccount = nameof(SubAccount).ToLower();
     }
 }
