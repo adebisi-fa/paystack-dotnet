@@ -1,48 +1,55 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
-using XtremeIT.Library.Pins;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using PayStack.Net;
 
 namespace PayStack.Net
 {
+    public interface IPayStackApi
+    {
+        ITransactionsApi Transactions { get; }
+    }
+
     public class PayStackApi : IPayStackApi
     {
-
         private readonly HttpClient _client;
-        internal static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
-        {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate
-        };
 
         public PayStackApi(string secretKey)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             _client = new HttpClient {BaseAddress = new Uri("https://api.paystack.co/")};
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", secretKey);
-            _client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", secretKey);
+            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            Transactions = new TransactionsApi(this);
         }
 
-        public InitializeResponse Initialize (InitializeRequest request)
+        public static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
         {
-            return Post<InitializeResponse, InitializeRequest>("transaction/initialize", request);
-        }
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate
+        };
 
-        public VerifyResponse Verify(string reference)
-        {
-            return Get<VerifyResponse>($"transaction/verify/{reference}");
-        }
+        public ITransactionsApi Transactions { get; }
 
-        TR Post<TR, T>(string relativeUrl, T request)
+        #region Utility Methods
+
+        internal TR Post<TR, T>(string relativeUrl, T request)
         {
             (request as IPreparable)?.Prepare();
 
             var requestBody = JsonConvert.SerializeObject(request, Formatting.Indented, SerializerSettings);
-            string filename = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().EscapedCodeBase.Substring("file:///".Length).Replace('/', '\\')) + "\\request_log.txt";
+            var filename =
+                Path.GetDirectoryName(
+                    Assembly.GetExecutingAssembly()
+                        .GetName()
+                        .EscapedCodeBase.Substring("file:///".Length)
+                        .Replace('/', '\\')) + "\\request_log.txt";
             File.AppendAllText(filename, requestBody);
             return JsonConvert.DeserializeObject<TR>(
                 _client.PostAsync(
@@ -52,11 +59,29 @@ namespace PayStack.Net
             );
         }
 
-        TR Get<TR>(string relativeUrl)
+        internal TR Get<TR, T>(string relativeUrl, T request)
+            where TR : class
+        {
+            var preparable = request as IPreparable;
+            var queryString = "";
+            if (preparable != null)
+            {
+                preparable.Prepare();
+                queryString = "?" + preparable.ToQueryString();
+            }
+
+            return JsonConvert.DeserializeObject<TR>(
+                _client.GetAsync(relativeUrl + queryString).Result.Content.ReadAsStringAsync().Result
+            );
+        }
+
+        internal TR Get<TR>(string relativeUrl)
         {
             return JsonConvert.DeserializeObject<TR>(
                 _client.GetAsync(relativeUrl).Result.Content.ReadAsStringAsync().Result
             );
         }
+
+        #endregion
     }
 }

@@ -4,9 +4,9 @@ using XtremeIT.Library.Pins;
 
 namespace PayStack.Net
 {
-    public class InitializeRequest : IPreparable
+    public class TransactionInitializeRequest : IPreparable
     {
-        public InitializeRequest()
+        public TransactionInitializeRequest()
         {
             CustomFields = new List<CustomField>();
             MetadataObject = new Dictionary<string, object>();
@@ -46,24 +46,6 @@ namespace PayStack.Net
         }
     }
 
-    public class InitializeResponse
-    {
-        public bool Status { get; set; }
-        public string Message { get; set; }
-        public InitializeResponseData Data { get; set; }
-    }
-
-    public class InitializeResponseData
-    {
-        [JsonProperty("authorization_url")]
-        public string AuthorizationUrl { get; set; }
-
-        [JsonProperty("access_code")]
-        public string AccessCode { get; set; }
-
-        public string Reference { get; set; }
-    }
-
     public class CustomField
     {
         public CustomField(string displayName, string variableName, string value)
@@ -89,5 +71,34 @@ namespace PayStack.Net
     {
         public static string Account = nameof(Account).ToLower();
         public static string SubAccount = nameof(SubAccount).ToLower();
+    }
+
+    public class TransactionInitialize
+    {
+        public class Data
+        {
+
+            [JsonProperty("authorization_url")]
+            public string AuthorizationUrl { get; set; }
+
+            [JsonProperty("access_code")]
+            public string AccessCode { get; set; }
+
+            [JsonProperty("reference")]
+            public string Reference { get; set; }
+        }
+    }
+
+    public class TransactionInitializeResponse
+    {
+
+        [JsonProperty("status")]
+        public bool Status { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
+
+        [JsonProperty("data")]
+        public TransactionInitialize.Data Data { get; set; }
     }
 }

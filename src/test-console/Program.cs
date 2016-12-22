@@ -9,22 +9,65 @@ namespace test_console
 {
     internal class Program
     {
+        private static PayStackApi _api;
+
         private static void Main(string[] args)
         {
-            HowToMakeInitializeRequest();
+            _api = new PayStackApi(ConfigurationManager.AppSettings["PayStackSecret"]);
+
+            TransactionExport_Setup();
+            //TransactionTotals_Setup();
+            //TransactionTimeline_Setup();
+            // TransactionFetch_Setup();
+            // TransactionList_Setup();
+            // InitializeRequest_Setup();
         }
 
-        private static void HowToMakeInitializeRequest()
+        private static void TransactionExport_Setup()
         {
-            var request = new InitializeRequest
+            var response = _api.Transactions.Export();
+            Console.WriteLine(
+                JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings)
+            );
+        }
+
+        private static void TransactionTotals_Setup()
+        {
+            var response = _api.Transactions.Totals();
+            Console.WriteLine(
+                JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings)
+            );
+        }
+
+        private static void TransactionTimeline_Setup()
+        {
+            var response = _api.Transactions.Timeline("540314");
+            Console.WriteLine(
+                JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings)
+            );
+        }
+
+        private static void TransactionFetch_Setup()
+        {
+            var response = _api.Transactions.Fetch("540314");
+            Console.WriteLine(
+                JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings)
+            );
+        }
+
+        private static void TransactionList_Setup()
+        {
+            var response = _api.Transactions.List();
+            Console.WriteLine(JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings));
+        }
+
+        private static void InitializeRequest_Setup()
+        {
+            var request = new TransactionInitializeRequest
             {
                 AmountInKobo = "900000",
-                Bearer = PayStackChargesBearer.Account,
-                SubAccount = "AZ_sub_account_id",
-                CallbackUrl = "http://callback_url",
                 Email = "adebisi-fa@live.com",
                 Reference = Guid.NewGuid().ToString(), // or your custom reference
-                TransactionCharge = 10000
             };
 
             // Add customer fields
@@ -34,33 +77,29 @@ namespace test_console
             request.MetadataObject["DataKey"] = "Containerization (Docker) is super Awesome!";
 
             // Show what the request JSON looks like
-            PrintRequest(request);
+            Console.WriteLine("Request");
+            Print(request);
+            Console.WriteLine();
 
-            /*
-                // Initialize api with secret from the <appSettings /> of application configuration file (app.config or web.config)
-                var api = new PayStackApi(ConfigurationManager.AppSettings["PayStackSecret"]); 
-                var response = api.Initialize(request);
+            // Initialize api with secret from the <appSettings /> of application configuration file (app.config or web.config)
+            var response = _api.Transactions.Initialize(request);
 
-                if (!response.Status) // Initialization failed
-                {
-                    // Display response message and quit!
-                    var message = response.Message;
-                    return;
-                }
-
-                // Retrieve and redirect to authorization url
-                var authorizationUrl = response.Data.AuthorizationUrl;
-                var accessCode = response.Data.AccessCode;
-                var reference = response.Data.Reference;
-            */
+            if (!response.Status) // Initialization failed
+            {
+                // Display response message and quit!
+                var message = response.Message;
+                return;
+            }
+            Console.WriteLine("Response");
+            Print(response);
         }
 
-        public static void PrintRequest(object request)
+        public static void Print(object request)
         {
             (request as IPreparable)?.Prepare();
 
             Console.WriteLine(
-                JsonConvert.SerializeObject(request, Formatting.Indented)
+                JsonConvert.SerializeObject(request, Formatting.Indented, PayStackApi.SerializerSettings)
             );
         }
     }

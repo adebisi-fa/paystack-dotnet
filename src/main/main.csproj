@@ -41,6 +41,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,10 +52,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Initialize.cs" />
-    <Compile Include="Entities\IPreparable.cs" />
-    <Compile Include="Entities\Verify.cs" />
-    <Compile Include="IPayStackApi.cs" />
+    <Compile Include="Apis\Transactions\ChargeAuthorization.cs" />
+    <Compile Include="Apis\Transactions\Export.cs" />
+    <Compile Include="Apis\Transactions\Fetch.cs" />
+    <Compile Include="Apis\Transactions\Initialize.cs" />
+    <Compile Include="Apis\IPreparable.cs" />
+    <Compile Include="Apis\Transactions\List.cs" />
+    <Compile Include="Apis\Transactions\Timeline.cs" />
+    <Compile Include="Apis\Transactions\TransactionsApi.cs" />
+    <Compile Include="Apis\Transactions\Totals.cs" />
+    <Compile Include="Apis\Transactions\Verify.cs" />
+    <Compile Include="Apis\Transactions\ITransactionsApi.cs" />
     <Compile Include="PayStackApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
