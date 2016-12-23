@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PayStack.Net
 {
@@ -11,7 +8,6 @@ namespace PayStack.Net
     {
         public class Photo
         {
-
             [JsonProperty("type")]
             public string Type { get; set; }
 
@@ -36,7 +32,6 @@ namespace PayStack.Net
 
         public class Datum
         {
-
             [JsonProperty("integration")]
             public int Integration { get; set; }
 
@@ -73,7 +68,6 @@ namespace PayStack.Net
 
         public class Meta
         {
-
             [JsonProperty("total")]
             public int Total { get; set; }
 
@@ -100,7 +94,6 @@ namespace PayStack.Net
 
     public class CustomerListResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace PayStack.Net
 {
-    public class CustomerCreate 
+    public class CustomerCreate
     {
         public class Data
         {
-
             [JsonProperty("email")]
             public string Email { get; set; }
 
@@ -57,7 +53,6 @@ namespace PayStack.Net
 
     public class CustomerCreateResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

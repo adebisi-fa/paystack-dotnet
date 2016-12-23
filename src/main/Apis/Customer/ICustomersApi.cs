@@ -1,5 +1,3 @@
-using PayStack.Net;
-
 namespace PayStack.Net
 {
     public interface ICustomersApi

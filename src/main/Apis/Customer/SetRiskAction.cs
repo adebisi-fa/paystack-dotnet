@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace PayStack.Net
 {
@@ -11,17 +6,17 @@ namespace PayStack.Net
     {
         [JsonProperty("risk_action")]
         public string RiskAction { get; set; }
-    }   
+    }
 
     public class CustomerSetRiskActionRequest
     {
         /// <summary>
-        /// Customer's ID, Code, or Email Address
+        ///     Customer's ID, Code, or Email Address
         /// </summary>
         public string Customer { get; set; }
 
         /// <summary>
-        /// One of the possible risk actions. 'allow' to whitelist. 'deny' to blacklist.
+        ///     One of the possible risk actions. 'allow' to whitelist. 'deny' to blacklist.
         /// </summary>
         [JsonProperty("risk_action")]
         public string RiskAction { get; set; }
