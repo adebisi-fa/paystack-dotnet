@@ -52,6 +52,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\Customer\Create.cs" />
+    <Compile Include="Apis\Customer\CustomersApi.cs" />
+    <Compile Include="Apis\Customer\Fetch.cs" />
+    <Compile Include="Apis\Customer\ICustomersApi.cs" />
+    <Compile Include="Apis\Customer\List.cs" />
+    <Compile Include="Apis\Customer\SetRiskAction.cs" />
+    <Compile Include="Apis\Customer\Update.cs" />
     <Compile Include="Apis\Transactions\ChargeAuthorization.cs" />
     <Compile Include="Apis\Transactions\Export.cs" />
     <Compile Include="Apis\Transactions\Fetch.cs" />

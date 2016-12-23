@@ -13,6 +13,7 @@ namespace PayStack.Net
     public interface IPayStackApi
     {
         ITransactionsApi Transactions { get; }
+        ICustomersApi Customers { get; }
     }
 
     public class PayStackApi : IPayStackApi
@@ -27,6 +28,7 @@ namespace PayStack.Net
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             Transactions = new TransactionsApi(this);
+            Customers = new CustomersApi(this);
         }
 
         public static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
@@ -37,24 +39,44 @@ namespace PayStack.Net
 
         public ITransactionsApi Transactions { get; }
 
+        public ICustomersApi Customers { get; }
+
         #region Utility Methods
 
-        internal TR Post<TR, T>(string relativeUrl, T request)
+        private string PrepareRequest<T>(T request)
         {
             (request as IPreparable)?.Prepare();
 
             var requestBody = JsonConvert.SerializeObject(request, Formatting.Indented, SerializerSettings);
+
             var filename =
                 Path.GetDirectoryName(
                     Assembly.GetExecutingAssembly()
                         .GetName()
                         .EscapedCodeBase.Substring("file:///".Length)
                         .Replace('/', '\\')) + "\\request_log.txt";
-            File.AppendAllText(filename, requestBody);
+
+            File.AppendAllText(filename, "\n\n" + requestBody);
+
+            return requestBody;
+        }
+
+        internal TR Post<TR, T>(string relativeUrl, T request)
+        {
             return JsonConvert.DeserializeObject<TR>(
                 _client.PostAsync(
                     relativeUrl,
-                    new StringContent(requestBody)
+                    new StringContent(PrepareRequest(request))
+                ).Result.Content.ReadAsStringAsync().Result
+            );
+        }
+
+        internal TR Put<TR, T>(string relativeUrl, T request)
+        {
+            return JsonConvert.DeserializeObject<TR>(
+                _client.PutAsync(
+                    relativeUrl,
+                    new StringContent(PrepareRequest(request))
                 ).Result.Content.ReadAsStringAsync().Result
             );
         }

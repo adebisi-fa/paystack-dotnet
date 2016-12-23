@@ -15,7 +15,18 @@ namespace test_console
         {
             _api = new PayStackApi(ConfigurationManager.AppSettings["PayStackSecret"]);
 
-            TransactionExport_Setup();
+            //
+            // Customers
+            //
+            // CustomersList();
+            // CustomerFetch();
+            // CustomerUpdate();
+            CustomerRiskAction();
+
+            //
+            // Transactions
+            //
+            // TransactionExport_Setup();
             //TransactionTotals_Setup();
             //TransactionTimeline_Setup();
             // TransactionFetch_Setup();
@@ -23,13 +34,26 @@ namespace test_console
             // InitializeRequest_Setup();
         }
 
-        private static void TransactionExport_Setup()
+        private static void CustomerRiskAction()
         {
-            var response = _api.Transactions.Export();
-            Console.WriteLine(
-                JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings)
-            );
+            _api.Customers.BlackList("CUS_bq58eabsts5xvhc").Print();
+            _api.Customers.WhiteList("CUS_bq58eabsts5xvhc").Print();
         }
+
+        private static void CustomerUpdate() =>
+            _api.Customers.Update("CUS_bq58eabsts5xvhc", "BILL", "Gate Williams III", "08068287222").Print();
+
+        private static void CustomerFetch() =>
+            _api.Customers.Fetch("CUS_kwsmfqylmt5lrb8").Print();
+
+
+        private static void CustomersList() =>
+            _api.Customers.List().Print();
+
+
+        private static void TransactionExport_Setup() =>
+            _api.Transactions.Export().Print();
+
 
         private static void TransactionTotals_Setup()
         {
@@ -39,27 +63,16 @@ namespace test_console
             );
         }
 
-        private static void TransactionTimeline_Setup()
-        {
-            var response = _api.Transactions.Timeline("540314");
-            Console.WriteLine(
-                JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings)
-            );
-        }
+        private static void TransactionTimeline_Setup() =>
+            _api.Transactions.Timeline("540314").Print();
 
-        private static void TransactionFetch_Setup()
-        {
-            var response = _api.Transactions.Fetch("540314");
-            Console.WriteLine(
-                JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings)
-            );
-        }
+        private static void TransactionFetch_Setup() =>
+            _api.Transactions.Fetch("540314").Print();
 
-        private static void TransactionList_Setup()
-        {
-            var response = _api.Transactions.List();
-            Console.WriteLine(JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings));
-        }
+
+        private static void TransactionList_Setup() =>
+            _api.Transactions.List().Print();
+
 
         private static void InitializeRequest_Setup()
         {
@@ -78,7 +91,7 @@ namespace test_console
 
             // Show what the request JSON looks like
             Console.WriteLine("Request");
-            Print(request);
+            request.Print();
             Console.WriteLine();
 
             // Initialize api with secret from the <appSettings /> of application configuration file (app.config or web.config)
@@ -91,10 +104,13 @@ namespace test_console
                 return;
             }
             Console.WriteLine("Response");
-            Print(response);
+            response.Print();
         }
+    }
 
-        public static void Print(object request)
+    public static class Extensions
+    {
+        public static void Print(this object request)
         {
             (request as IPreparable)?.Prepare();
 
