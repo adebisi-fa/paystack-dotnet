@@ -29,6 +29,7 @@ namespace PayStack.Net
 
             Transactions = new TransactionsApi(this);
             Customers = new CustomersApi(this);
+            SubAccounts = new SubAccountApi(this);
         }
 
         public static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
@@ -36,6 +37,8 @@ namespace PayStack.Net
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
             DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate
         };
+
+        public ISubAccountApi SubAccounts { get; }
 
         public ITransactionsApi Transactions { get; }
 

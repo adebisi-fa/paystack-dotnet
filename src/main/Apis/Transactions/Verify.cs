@@ -1,6 +1,6 @@
 ﻿using System;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PayStack.Net
 {
@@ -8,7 +8,6 @@ namespace PayStack.Net
     {
         public class History
         {
-
             [JsonProperty("type")]
             public string Type { get; set; }
 
@@ -21,7 +20,6 @@ namespace PayStack.Net
 
         public class Log
         {
-
             [JsonProperty("time_spent")]
             public int TimeSpent { get; set; }
 
@@ -47,12 +45,11 @@ namespace PayStack.Net
             public object Channel { get; set; }
 
             [JsonProperty("history")]
-            public IList<History> History { get; set; }
+            public IList<History> Histories { get; set; }
         }
 
         public class Authorization
         {
-
             [JsonProperty("authorization_code")]
             public string AuthorizationCode { get; set; }
 
@@ -86,7 +83,6 @@ namespace PayStack.Net
 
         public class Customer
         {
-
             [JsonProperty("id")]
             public int Id { get; set; }
 
@@ -105,7 +101,6 @@ namespace PayStack.Net
 
         public class Data
         {
-
             [JsonProperty("amount")]
             public int Amount { get; set; }
 
@@ -125,13 +120,13 @@ namespace PayStack.Net
             public string Domain { get; set; }
 
             [JsonProperty("metadata")]
-            public int Metadata { get; set; }
+            public Metadata Metadata { get; set; }
 
             [JsonProperty("gateway_response")]
             public string GatewayResponse { get; set; }
 
             [JsonProperty("message")]
-            public object Message { get; set; }
+            public string Message { get; set; }
 
             [JsonProperty("channel")]
             public string Channel { get; set; }
@@ -154,12 +149,10 @@ namespace PayStack.Net
             [JsonProperty("plan")]
             public string Plan { get; set; }
         }
-
     }
 
     public class TransactionVerifyResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 
@@ -169,6 +162,4 @@ namespace PayStack.Net
         [JsonProperty("data")]
         public TransactionVerify.Data Data { get; set; }
     }
-
-
 }

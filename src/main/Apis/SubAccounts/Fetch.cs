@@ -2,7 +2,11 @@
 
 namespace PayStack.Net
 {
-    public class TransactionFetchResponse
+    public class SubAccountFetchData : SubAccountCreate.Data
+    {
+    }
+
+    public class SubAccountFetchResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }
@@ -11,6 +15,6 @@ namespace PayStack.Net
         public string Message { get; set; }
 
         [JsonProperty("data")]
-        public TransactionList.Datum Data { get; set; }
+        public SubAccountFetchData Data { get; set; }
     }
 }

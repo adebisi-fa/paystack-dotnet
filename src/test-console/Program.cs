@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using PayStack.Net;
 using System.IO;
 using System.Reflection;
+using PayStack.Net.Apis;
 
 namespace test_console
 {
@@ -16,12 +17,19 @@ namespace test_console
             _api = new PayStackApi(ConfigurationManager.AppSettings["PayStackSecret"]);
 
             //
+            // Sub Accounts
+            //
+            // ListSubAccounts();
+            // UpdateSubAccount();
+            GetBanks();
+
+            //
             // Customers
             //
             // CustomersList();
             // CustomerFetch();
             // CustomerUpdate();
-            CustomerRiskAction();
+            //CustomerRiskAction();
 
             //
             // Transactions
@@ -32,6 +40,34 @@ namespace test_console
             // TransactionFetch_Setup();
             // TransactionList_Setup();
             // InitializeRequest_Setup();
+        }
+
+        private static void GetBanks()
+        {
+            _api.SubAccounts.GetBanks().Print();
+        }
+
+        private static void UpdateSubAccount()
+        {
+            var suba = _api.SubAccounts.Fetch("ACCT_v1wico0y3742ecn");
+
+            if (!suba.Status) return;
+
+            // Populate sub account request from fetched object
+            var request = new SubAccountUpdateRequest().PopulateWith(suba);
+
+            // Update as necessary
+            request.BusinessName = "NMA 2017 Conference Account (Updated)";
+
+            // Call the API
+            var response = _api.SubAccounts.Update("ACCT_v1wico0y3742ecn", request);
+
+            Console.WriteLine(response.Status ? "Subaccount successfully updated." : response.Message);
+        }
+
+        private static void ListSubAccounts()
+        {
+            _api.SubAccounts.List().Print();
         }
 
         private static void CustomerRiskAction()

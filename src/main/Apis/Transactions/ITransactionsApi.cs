@@ -1,5 +1,4 @@
 using System;
-using PayStack.Net;
 
 namespace PayStack.Net
 {

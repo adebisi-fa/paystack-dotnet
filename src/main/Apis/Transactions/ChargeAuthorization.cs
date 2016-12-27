@@ -1,21 +1,10 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XtremeIT.Library.Pins;
 
 namespace PayStack.Net
 {
-    public class ChargeAuthorizationRequest : IPreparable
+    public class ChargeAuthorizationRequest : RequestMetadataExtender
     {
-        public ChargeAuthorizationRequest()
-        {
-            CustomFields = new List<CustomField>();
-            MetadataObject = new Dictionary<string, object>();
-        }
-
         public string Reference { get; set; }
 
         [JsonProperty("authorization_code")]
@@ -33,21 +22,13 @@ namespace PayStack.Net
         [JsonProperty("transaction_charge")]
         public int TransactionCharge { get; set; }
 
-        [JsonIgnore]
-        public List<CustomField> CustomFields { get; set; }
-
-        [JsonIgnore]
-        public Dictionary<string, object> MetadataObject { get; set; }
-
-        public string Metadata { get; set; }
-
         public string Bearer { get; set; }
 
-        public void Prepare()
+        public override void Prepare()
         {
-            MetadataObject["custom_fields"] = CustomFields.ToArray();
-            Metadata = JsonConvert.SerializeObject(MetadataObject, PayStackApi.SerializerSettings);
-            Reference = $"{Reference};{Generator.NewPin(new GeneratorSettings { Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7 })}";
+            base.Prepare();
+            Reference =
+                $"{Reference};{Generator.NewPin(new GeneratorSettings {Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7})}";
         }
     }
 

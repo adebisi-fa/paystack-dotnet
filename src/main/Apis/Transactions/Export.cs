@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace PayStack.Net
@@ -19,7 +15,6 @@ namespace PayStack.Net
     {
         public class Data
         {
-
             [JsonProperty("path")]
             public string Path { get; set; }
         }
@@ -27,7 +22,6 @@ namespace PayStack.Net
 
     public class TransactionExportResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

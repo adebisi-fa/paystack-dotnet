@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PayStack.Net
 {
@@ -16,7 +12,7 @@ namespace PayStack.Net
         }
 
         public TransactionInitializeResponse Initialize(string email, string amount)
-            => Initialize(new TransactionInitializeRequest { Email = email, AmountInKobo = amount });
+            => Initialize(new TransactionInitializeRequest {Email = email, AmountInKobo = amount});
 
         public TransactionInitializeResponse Initialize(TransactionInitializeRequest request) =>
             _api.Post<TransactionInitializeResponse, TransactionInitializeRequest>("transaction/initialize", request);
@@ -36,14 +32,14 @@ namespace PayStack.Net
 
         public TransactionTotalsResponse Totals(DateTime? from = null, DateTime? to = null) =>
             _api.Get<TransactionTotalsResponse, TransactionTotalsRequest>(
-                "transaction/totals", new TransactionTotalsRequest { From = from, To = to }
+                "transaction/totals", new TransactionTotalsRequest {From = from, To = to}
             );
 
         public TransactionExportResponse Export(DateTime? from = null, DateTime? to = null,
-                bool settled = false, string paymentPage = null) =>
+            bool settled = false, string paymentPage = null) =>
             _api.Get<TransactionExportResponse, TransactionExportRequest>(
                 "transaction/export",
-                new TransactionExportRequest { From = from, To = to, Settled = settled, PaymentPage = paymentPage }
+                new TransactionExportRequest {From = from, To = to, Settled = settled, PaymentPage = paymentPage}
             );
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace PayStack.Net
@@ -54,7 +50,6 @@ namespace PayStack.Net
 
     public class TransactionTimelineResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

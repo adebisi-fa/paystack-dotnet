@@ -6,29 +6,8 @@ namespace PayStack.Net
 {
     public class TransactionList
     {
-        public class CustomField
-        {
-
-            [JsonProperty("display_name")]
-            public string DisplayName { get; set; }
-
-            [JsonProperty("variable_name")]
-            public string VariableName { get; set; }
-
-            [JsonProperty("value")]
-            public string Value { get; set; }
-        }
-
-        public class Metadata : Dictionary<string, object>
-        {
-
-            [JsonProperty("custom_fields")]
-            public IList<CustomField> CustomFields { get; set; }
-        }
-
         public class History
         {
-
             [JsonProperty("type")]
             public string Type { get; set; }
 
@@ -41,7 +20,6 @@ namespace PayStack.Net
 
         public class Log
         {
-
             [JsonProperty("time_spent")]
             public int TimeSpent { get; set; }
 
@@ -72,7 +50,6 @@ namespace PayStack.Net
 
         public class Authorization
         {
-
             [JsonProperty("authorization_code")]
             public string AuthorizationCode { get; set; }
 
@@ -103,7 +80,6 @@ namespace PayStack.Net
 
         public class Customer
         {
-
             [JsonProperty("id")]
             public int Id { get; set; }
 
@@ -119,7 +95,6 @@ namespace PayStack.Net
 
         public class Datum
         {
-
             [JsonProperty("id")]
             public int Id { get; set; }
 
@@ -177,7 +152,6 @@ namespace PayStack.Net
 
         public class Meta
         {
-
             [JsonProperty("total")]
             public int Total { get; set; }
 
@@ -207,14 +181,13 @@ namespace PayStack.Net
 
         public void Prepare()
         {
-            From = From.Date;  // Start from 12:00 for this date
+            From = From.Date; // Start from 12:00 for this date
             To = To.Date; // Stops at 12:00 for this date
         }
     }
 
     public class TransactionListResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

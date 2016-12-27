@@ -1,23 +1,17 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using XtremeIT.Library.Pins;
 
 namespace PayStack.Net
 {
-    public class TransactionInitializeRequest : IPreparable
+    public class TransactionInitializeRequest : RequestMetadataExtender
     {
-        public TransactionInitializeRequest()
-        {
-            CustomFields = new List<CustomField>();
-            MetadataObject = new Dictionary<string, object>();
-        }
-
         public string Reference { get; set; }
 
         [JsonProperty("amount")]
         public string AmountInKobo { get; set; }
 
         public string Email { get; set; }
+
         public string Plan { get; set; }
 
         [JsonProperty("callback_url")]
@@ -28,43 +22,14 @@ namespace PayStack.Net
         [JsonProperty("transaction_charge")]
         public int TransactionCharge { get; set; }
 
-        [JsonIgnore]
-        public List<CustomField> CustomFields { get; set; }
-
-        [JsonIgnore]
-        public Dictionary<string, object> MetadataObject { get; set; }
-
-        public string Metadata { get; set; }
-
         public string Bearer { get; set; }
 
-        public void Prepare()
+        public override void Prepare()
         {
-            MetadataObject["custom_fields"] = CustomFields.ToArray();
-            Metadata = JsonConvert.SerializeObject(MetadataObject, PayStackApi.SerializerSettings);
-            Reference = $"{Reference};{Generator.NewPin(new GeneratorSettings { Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7 })}";
+            base.Prepare();
+            Reference =
+                $"{Reference}-{Generator.NewPin(new GeneratorSettings {Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7})}";
         }
-    }
-
-    public class CustomField
-    {
-        public CustomField(string displayName, string variableName, string value)
-        {
-            DisplayName = displayName;
-            VariableName = variableName;
-            Value = value;
-        }
-
-        [JsonProperty("display_name")]
-        public string DisplayName { get; set; }
-
-        [JsonProperty("variable_name")]
-        public string VariableName { get; set; }
-
-        public string Value { get; set; }
-
-        public static CustomField From(string displayName, string variableName, string value)
-            => new CustomField(displayName, variableName, value);
     }
 
     public static class PayStackChargesBearer
@@ -77,7 +42,6 @@ namespace PayStack.Net
     {
         public class Data
         {
-
             [JsonProperty("authorization_url")]
             public string AuthorizationUrl { get; set; }
 
@@ -91,7 +55,6 @@ namespace PayStack.Net
 
     public class TransactionInitializeResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

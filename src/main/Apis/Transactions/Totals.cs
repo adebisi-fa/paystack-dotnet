@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace PayStack.Net
@@ -20,7 +17,6 @@ namespace PayStack.Net
 
         public class PendingTransfersByCurrency
         {
-
             [JsonProperty("currency")]
             public string Currency { get; set; }
 
@@ -30,7 +26,6 @@ namespace PayStack.Net
 
         public class Data
         {
-
             [JsonProperty("total_transactions")]
             public int TotalTransactions { get; set; }
 
@@ -59,7 +54,6 @@ namespace PayStack.Net
 
     public class TransactionTotalsResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 
