@@ -24,7 +24,7 @@ To consume the Transactions API, use methods from the **[ITransactionsApi](https
 ```c#
 
 // Initializing a transaction
-var response = api.Transactions.Initialize("user@somewhere.net", "5000000");
+var response = api.Transactions.Initialize("user@somewhere.net", 5000000);
 if (response.Status)
   // use response.Data
 else
