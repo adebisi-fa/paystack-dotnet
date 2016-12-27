@@ -114,7 +114,7 @@ namespace test_console
         {
             var request = new TransactionInitializeRequest
             {
-                AmountInKobo = "900000",
+                AmountInKobo = 900000,
                 Email = "adebisi-fa@live.com",
                 Reference = Guid.NewGuid().ToString(), // or your custom reference
             };

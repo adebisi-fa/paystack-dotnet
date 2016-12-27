@@ -8,7 +8,7 @@ namespace PayStack.Net
         public string Reference { get; set; }
 
         [JsonProperty("amount")]
-        public string AmountInKobo { get; set; }
+        public int AmountInKobo { get; set; }
 
         public string Email { get; set; }
 

@@ -49,8 +49,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="XtremeIT.Library.Pins">
-      <HintPath>..\..\..\..\..\Visual Studio 2013\Projects\A2L\Al.Association.Engine\bin\Release\XtremeIT.Library.Pins.dll</HintPath>
+    <Reference Include="XtremeIT.Library.Pins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5f275dd942b1b995, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\external-libs\XtremeIT.Library.Pins.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +111,7 @@
     <WebDownload Condition="!Exists('nuget.exe')" Filename="nuget.exe" FileUri="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" />
     <RemoveDir Directories="$(MSBuildProjectDirectory)\nuget\lib\net45\" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Release\$(AssemblyName).dll" DestinationFolder="$(MSBuildProjectDirectory)\nuget\lib\net45" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Release\XtremeIT.Library.Pins.dll" DestinationFolder="$(MSBuildProjectDirectory)\nuget\lib\net45" />
     <Exec Command="nuget pack .\nuget\paystack-dotnet.nuspec">
     </Exec>
   </Target>
