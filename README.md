@@ -61,7 +61,7 @@ public interface ITransactionsApi
 
 ## Other APIs
 
-Other APIs are implemented in like manner and exposed via the **PayStack** type as given below:
+Other APIs are implemented in like manner and exposed via the **PayStackApi** type as given below:
 ```c#
 // Customer APIs
 
