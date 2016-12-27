@@ -1,4 +1,5 @@
 ﻿using System;
+using XtremeIT.Library.Pins;
 
 namespace PayStack.Net
 {
@@ -11,15 +12,19 @@ namespace PayStack.Net
             _api = api;
         }
 
-        public TransactionInitializeResponse Initialize(string email, string amount)
-            => Initialize(new TransactionInitializeRequest {Email = email, AmountInKobo = amount});
+        public TransactionInitializeResponse Initialize(string email, string amount, string reference = null, bool makeReferenceUnique = false)
+            => Initialize(new TransactionInitializeRequest { Reference = reference, Email = email, AmountInKobo = amount }, makeReferenceUnique);
 
-        public TransactionInitializeResponse Initialize(TransactionInitializeRequest request) =>
-            _api.Post<TransactionInitializeResponse, TransactionInitializeRequest>("transaction/initialize", request);
+        public TransactionInitializeResponse Initialize(TransactionInitializeRequest request, bool makeReferenceUnique = false)
+        {
+            if (makeReferenceUnique)
+                request.Reference = $"{request.Reference}-{Generator.NewPin(new GeneratorSettings { Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7 })}";
+            return _api.Post<TransactionInitializeResponse, TransactionInitializeRequest>("transaction/initialize", request);
+        }
 
 
         public TransactionVerifyResponse Verify(string reference) =>
-            _api.Get<TransactionVerifyResponse>($"transaction/verify/{reference}");
+                _api.Get<TransactionVerifyResponse>($"transaction/verify/{reference}");
 
         public TransactionListResponse List(TransactionListRequest request = null) =>
             _api.Get<TransactionListResponse, TransactionListRequest>("transaction", request);
@@ -32,14 +37,14 @@ namespace PayStack.Net
 
         public TransactionTotalsResponse Totals(DateTime? from = null, DateTime? to = null) =>
             _api.Get<TransactionTotalsResponse, TransactionTotalsRequest>(
-                "transaction/totals", new TransactionTotalsRequest {From = from, To = to}
+                "transaction/totals", new TransactionTotalsRequest { From = from, To = to }
             );
 
         public TransactionExportResponse Export(DateTime? from = null, DateTime? to = null,
             bool settled = false, string paymentPage = null) =>
             _api.Get<TransactionExportResponse, TransactionExportRequest>(
                 "transaction/export",
-                new TransactionExportRequest {From = from, To = to, Settled = settled, PaymentPage = paymentPage}
+                new TransactionExportRequest { From = from, To = to, Settled = settled, PaymentPage = paymentPage }
             );
     }
 }

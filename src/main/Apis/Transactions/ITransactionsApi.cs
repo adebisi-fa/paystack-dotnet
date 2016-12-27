@@ -4,8 +4,8 @@ namespace PayStack.Net
 {
     public interface ITransactionsApi
     {
-        TransactionInitializeResponse Initialize(string email, string amount);
-        TransactionInitializeResponse Initialize(TransactionInitializeRequest request);
+        TransactionInitializeResponse Initialize(string email, string amount, string reference = null, bool makeReferenceUnique = false);
+        TransactionInitializeResponse Initialize(TransactionInitializeRequest request, bool makeReferenceUnique = false);
         TransactionVerifyResponse Verify(string reference);
         TransactionListResponse List(TransactionListRequest request = null);
         TransactionFetchResponse Fetch(string transactionId);

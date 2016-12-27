@@ -23,13 +23,6 @@ namespace PayStack.Net
         public int TransactionCharge { get; set; }
 
         public string Bearer { get; set; }
-
-        public override void Prepare()
-        {
-            base.Prepare();
-            Reference =
-                $"{Reference}-{Generator.NewPin(new GeneratorSettings {Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7})}";
-        }
     }
 
     public static class PayStackChargesBearer

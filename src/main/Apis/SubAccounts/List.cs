@@ -36,7 +36,7 @@ namespace PayStack.Net
             public Metadata Metadata { get; set; }
 
             [JsonProperty("percentage_charge")]
-            public int PercentageCharge { get; set; }
+            public double PercentageCharge { get; set; }
 
             [JsonProperty("is_verified")]
             public bool IsVerified { get; set; }
