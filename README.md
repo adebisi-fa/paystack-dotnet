@@ -46,7 +46,7 @@ The **ITransactionsApi** is defined as follows:
 ```c#
 public interface ITransactionsApi
 {
-    TransactionInitializeResponse Initialize(string email, string amount);
+    TransactionInitializeResponse Initialize(string email, int amount);
     TransactionInitializeResponse Initialize(TransactionInitializeRequest request);
     TransactionVerifyResponse Verify(string reference);
     TransactionListResponse List(TransactionListRequest request = null);
