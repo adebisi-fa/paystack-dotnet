@@ -51,16 +51,6 @@ namespace PayStack.Net
             (request as IPreparable)?.Prepare();
 
             var requestBody = JsonConvert.SerializeObject(request, Formatting.Indented, SerializerSettings);
-
-            var filename =
-                Path.GetDirectoryName(
-                    Assembly.GetExecutingAssembly()
-                        .GetName()
-                        .EscapedCodeBase.Substring("file:///".Length)
-                        .Replace('/', '\\')) + "\\request_log.txt";
-
-            File.AppendAllText(filename, "\n\n" + requestBody);
-
             return requestBody;
         }
 
