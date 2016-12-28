@@ -101,7 +101,7 @@ Arbitary non custom-field metadata can be set, viz:
 var request = new SubAccountCreateRequest { ... };
 
 // Add arbitary information to metadata
-request.MetadataObject["Technical-Tip"] = "Microservices is awesome with Docker & Kubernetes!";
+request.MetadataObject["Technical-Tip"] = "Microservices are awesome with Docker & Kubernetes!";
 request.MetadataObject["ProductionUrl"] = "http://amazon.co.uk/product-url-slugified";
 
 // Send request
