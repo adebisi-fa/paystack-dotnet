@@ -42,6 +42,37 @@ if (verifyResponse.Status)
   */
 ```
 
+## Working with Metadata
+Some PayStack API allow sending additional information about your request via an optional **metadata** property.  PayStack.Net Request types that support this feature (e.g. **[TransactionInitializeRequest](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/Apis/Transactions/Initialize.cs#L6)**, **[SubAccountCreateRequest](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/Apis/SubAccounts/Create.cs#L81)**, **[ChargeAuthorizationRequest](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/Apis/Transactions/ChargeAuthorization.cs#L6)**, among others) inherit from the **[RequestMetadataExtender](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/Apis/RequestMetadataExtender.cs)** class, and can be used thus:
+```c#
+// Prepare request object and set necessary payload on request
+var request = new TransactionInitializeRequest { ... };
+
+// Add a custom-field to metadata
+request.CustomFields.Add(CustomField.From("Field Name", "field_variable_name", "Field Value");
+
+//  Send request
+var response = api.Transactions.Initialize(request);
+
+// Use response as needed
+...
+```
+Arbitary non custom-field metadata can be set, viz:
+```c#
+// Prepare request object and set necessary payload on request
+var request = new SubAccountCreateRequest { ... };
+
+// Add arbitary information to metadata
+request.MetadataObject["Technical-Tip"] = "Microservices is awesome with Docker & Kubernetes!";
+request.MetadataObject["ProductionUrl"] = "http://amazon.co.uk/product-url-slugified";
+
+// Send request
+var response = api.SubAccounts.Create(request);
+
+// Use response as needed
+...
+```
+
 The **ITransactionsApi** is defined as follows:
 ```c#
 public interface ITransactionsApi
