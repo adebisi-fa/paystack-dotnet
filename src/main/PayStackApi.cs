@@ -12,6 +12,7 @@ namespace PayStack.Net
 {
     public interface IPayStackApi
     {
+        ISubAccountApi SubAccounts { get; }
         ITransactionsApi Transactions { get; }
         ICustomersApi Customers { get; }
     }
