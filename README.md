@@ -80,6 +80,13 @@ var response = api.SubAccounts.Create(saRequest); // api.SubAccounts is of type 
 // etc
 ```
 
+The only exception to this is the API for resolving a card's identity given its Bank Identification Number (BIN), **[ResolveCardBin("...")](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/PayStackApi.cs#L49)**, which is defined directly on the **PayStackApi** class, as follows:
+
+```c#
+ResolveCardBinResponse response = api.ResolveCardBin("123456");
+// Use response as necessary
+```
+
 ## Working with Metadata
 Some PayStack API allow sending additional information about your request via an optional **metadata** property.  PayStack.Net **Request Types** that support this feature (e.g. **[TransactionInitializeRequest](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/Apis/Transactions/Initialize.cs#L6)**, **[SubAccountCreateRequest](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/Apis/SubAccounts/Create.cs#L81)**, **[ChargeAuthorizationRequest](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/Apis/Transactions/ChargeAuthorization.cs#L6)**, among others) inherit from the **[RequestMetadataExtender](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/Apis/RequestMetadataExtender.cs)** class.  RequestMetadataExtender class has two properties, **CustomFields** (a List of **[CustomField](https://github.com/adebisi-fa/paystack-dotnet/blob/master/src/main/Apis/RequestMetadataExtender.cs#L35)**) and **MetadataObject** (a **string**-keyed dictionary of **object**), and can be used thus:
 ```c#
