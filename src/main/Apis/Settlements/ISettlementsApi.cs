@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PayStack.Net.Apis.Settlements
+namespace PayStack.Net
 {
     public interface ISettlementsApi
     {

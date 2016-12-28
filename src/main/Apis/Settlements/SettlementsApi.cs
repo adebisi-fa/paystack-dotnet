@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PayStack.Net.Apis.Settlements
+namespace PayStack.Net
 {
     public class SettlementsApi : ISettlementsApi
     {
