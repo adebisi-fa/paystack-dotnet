@@ -7,6 +7,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using PayStack.Net;
+using PayStack.Net.Apis.Settlements;
 
 namespace PayStack.Net
 {
@@ -15,6 +16,7 @@ namespace PayStack.Net
         ISubAccountApi SubAccounts { get; }
         ITransactionsApi Transactions { get; }
         ICustomersApi Customers { get; }
+        ISettlementsApi Settlements { get; }
     }
 
     public class PayStackApi : IPayStackApi
@@ -31,6 +33,7 @@ namespace PayStack.Net
             Transactions = new TransactionsApi(this);
             Customers = new CustomersApi(this);
             SubAccounts = new SubAccountApi(this);
+            Settlements = new SettlementsApi(this);
         }
 
         public static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
@@ -44,6 +47,9 @@ namespace PayStack.Net
         public ITransactionsApi Transactions { get; }
 
         public ICustomersApi Customers { get; }
+
+        public ISettlementsApi Settlements { get; }
+
 
         #region Utility Methods
 

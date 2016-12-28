@@ -63,6 +63,9 @@
     <Compile Include="Apis\Customers\SetRiskAction.cs" />
     <Compile Include="Apis\Customers\Update.cs" />
     <Compile Include="Apis\RequestMetadataExtender.cs" />
+    <Compile Include="Apis\Settlements\Fetch.cs" />
+    <Compile Include="Apis\Settlements\ISettlementsApi.cs" />
+    <Compile Include="Apis\Settlements\SettlementsApi.cs" />
     <Compile Include="Apis\SubAccounts\Bank.cs" />
     <Compile Include="Apis\SubAccounts\Create.cs" />
     <Compile Include="Apis\SubAccounts\Fetch.cs" />

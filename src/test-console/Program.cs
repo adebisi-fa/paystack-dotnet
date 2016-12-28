@@ -17,11 +17,16 @@ namespace test_console
             _api = new PayStackApi(ConfigurationManager.AppSettings["PayStackSecret"]);
 
             //
+            // Settlements
+            //
+            SettlementsFetch();
+
+            //
             // Sub Accounts
             //
             // ListSubAccounts();
             // UpdateSubAccount();
-            GetBanks();
+            // GetBanks();
 
             //
             // Customers
@@ -41,6 +46,8 @@ namespace test_console
             // TransactionList_Setup();
             // InitializeRequest_Setup();
         }
+
+        private static void SettlementsFetch() => _api.Settlements.Fetch().Print();
 
         private static void GetBanks()
         {
