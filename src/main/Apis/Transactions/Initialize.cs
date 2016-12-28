@@ -17,6 +17,7 @@ namespace PayStack.Net
         [JsonProperty("callback_url")]
         public string CallbackUrl { get; set; }
 
+        [JsonProperty("subaccount")]
         public string SubAccount { get; set; }
 
         [JsonProperty("transaction_charge")]
