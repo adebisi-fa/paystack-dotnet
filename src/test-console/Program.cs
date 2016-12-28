@@ -2,8 +2,6 @@
 using System.Configuration;
 using Newtonsoft.Json;
 using PayStack.Net;
-using System.IO;
-using System.Reflection;
 using PayStack.Net.Apis;
 
 namespace test_console
@@ -19,7 +17,10 @@ namespace test_console
             //
             // Settlements
             //
-            SettlementsFetch();
+            // SettlementsFetch();
+
+            // Miscellaneous
+            _api.ResolveCardBin("412345");
 
             //
             // Sub Accounts
@@ -123,7 +124,7 @@ namespace test_console
             {
                 AmountInKobo = 900000,
                 Email = "adebisi-fa@live.com",
-                Reference = Guid.NewGuid().ToString(), // or your custom reference
+                Reference = Guid.NewGuid().ToString() // or your custom reference
             };
 
             // Add customer fields

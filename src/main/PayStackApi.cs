@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using PayStack.Net;
-using PayStack.Net.Apis.Settlements;
 
 namespace PayStack.Net
 {
@@ -50,6 +46,8 @@ namespace PayStack.Net
 
         public ISettlementsApi Settlements { get; }
 
+        public ResolveCardBinResponse ResolveCardBin(string cardBin) =>
+            Get<ResolveCardBinResponse>($"decision/bin/{cardBin}");
 
         #region Utility Methods
 

@@ -62,6 +62,7 @@
     <Compile Include="Apis\Customers\List.cs" />
     <Compile Include="Apis\Customers\SetRiskAction.cs" />
     <Compile Include="Apis\Customers\Update.cs" />
+    <Compile Include="Apis\Miscellaneous\ResolveCardBin.cs" />
     <Compile Include="Apis\RequestMetadataExtender.cs" />
     <Compile Include="Apis\Settlements\Fetch.cs" />
     <Compile Include="Apis\Settlements\ISettlementsApi.cs" />
