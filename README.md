@@ -94,7 +94,9 @@ Some PayStack API allow sending additional information about your request via an
 var request = new TransactionInitializeRequest { ... };
 
 // Add a custom-field to metadata
-request.CustomFields.Add(CustomField.From("Field Name", "field_variable_name", "Field Value");
+request.CustomFields.Add(
+  CustomField.From("Field Name", "field_variable_name", "Field Value")
+);
 
 //  Send request
 var response = api.Transactions.Initialize(request);
