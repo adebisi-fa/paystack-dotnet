@@ -74,8 +74,14 @@ namespace PayStack.Net
             [JsonProperty("country_code")]
             public string CountryCode { get; set; }
 
+            [JsonProperty("reusable")]
+            public bool? Reusable { get; set; }
+
             [JsonProperty("brand")]
             public string Brand { get; set; }
+
+            [JsonProperty("channel")]
+            public string Channel { get; set; }
         }
 
         public class Customer

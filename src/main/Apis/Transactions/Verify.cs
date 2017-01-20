@@ -75,7 +75,7 @@ namespace PayStack.Net
             public string Channel { get; set; }
 
             [JsonProperty("reusable")]
-            public bool Reusable { get; set; }
+            public bool? Reusable { get; set; }
 
             [JsonProperty("country_code")]
             public string CountryCode { get; set; }

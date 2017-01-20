@@ -253,3 +253,6 @@ paket-files/
 
 # External Dependencies
 !**/external-libs/*.dll
+/src/main/nuget/lib/net45/XtremeIT.Library.Pins.dll
+/src/main/nuget/lib/net45/PayStack.Net.dll
+/src/main/nuget.exe
