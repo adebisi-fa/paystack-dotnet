@@ -10,17 +10,32 @@ namespace test_console
     {
         private static PayStackApi _api;
 
+        public static void VerifyPaymentReference()
+        {
+            _api = new PayStackApi("sk_test_e99df0019c15a05c958ce59ade539eb7b8f26f36");
+            var response = _api.Transactions.Verify("tbe3tzaz4g");
+            response.Print();
+        }
+
         private static void Main(string[] args)
         {
+            // VerifyPaymentReference();
+
             _api = new PayStackApi(ConfigurationManager.AppSettings["PayStackSecret"]);
 
+            //
+            // Miscellaneous
+            //
+            ListBanks();
+            var response = _api.Miscellaneous.ResolveAccountNumber("0043216012", "058");
+            response.Print();
             //
             // Settlements
             //
             // SettlementsFetch();
 
             // Miscellaneous
-            _api.ResolveCardBin("412345");
+            //_api.ResolveCardBin("412345");
 
             //
             // Sub Accounts
@@ -46,6 +61,13 @@ namespace test_console
             // TransactionFetch_Setup();
             // TransactionList_Setup();
             // InitializeRequest_Setup();
+        }
+
+        private static void ListBanks()
+        {
+            var response = _api.Miscellaneous.ListBanks();
+            foreach (var b in response.Data)
+                Console.WriteLine($"[{b.Code}] {b.Name} {b.Slug}");
         }
 
         private static void SettlementsFetch() => _api.Settlements.Fetch().Print();

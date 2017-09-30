@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using XtremeIT.Library.Pins;
 
 namespace PayStack.Net
 {

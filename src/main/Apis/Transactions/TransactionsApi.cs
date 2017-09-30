@@ -1,5 +1,4 @@
 ﻿using System;
-using XtremeIT.Library.Pins;
 
 namespace PayStack.Net
 {
@@ -18,7 +17,7 @@ namespace PayStack.Net
         public TransactionInitializeResponse Initialize(TransactionInitializeRequest request, bool makeReferenceUnique = false)
         {
             if (makeReferenceUnique)
-                request.Reference = $"{request.Reference}-{Generator.NewPin(new GeneratorSettings { Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7 })}";
+                request.Reference = $"{request.Reference}-{Guid.NewGuid().ToString().Substring(0, 8)}";
             return _api.Post<TransactionInitializeResponse, TransactionInitializeRequest>("transaction/initialize", request);
         }
 

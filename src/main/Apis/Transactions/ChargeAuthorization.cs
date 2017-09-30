@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using XtremeIT.Library.Pins;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace PayStack.Net
 {
@@ -28,7 +28,7 @@ namespace PayStack.Net
         {
             base.Prepare();
             Reference =
-                $"{Reference};{Generator.NewPin(new GeneratorSettings {Domain = GeneratorCharacterDomains.AlphaNumerics, PinLength = 7})}";
+                $"{Reference};{Guid.NewGuid().ToString().Substring(0, 8)}";
         }
     }
 

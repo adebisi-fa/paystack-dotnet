@@ -22,7 +22,7 @@ namespace PayStack.Net
         public PayStackApi(string secretKey)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            _client = new HttpClient {BaseAddress = new Uri("https://api.paystack.co/")};
+            _client = new HttpClient { BaseAddress = new Uri("https://api.paystack.co/") };
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", secretKey);
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -30,6 +30,7 @@ namespace PayStack.Net
             Customers = new CustomersApi(this);
             SubAccounts = new SubAccountApi(this);
             Settlements = new SettlementsApi(this);
+            Miscellaneous = new MiscellaneousApi(this);
         }
 
         public static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
@@ -46,8 +47,10 @@ namespace PayStack.Net
 
         public ISettlementsApi Settlements { get; }
 
-        public ResolveCardBinResponse ResolveCardBin(string cardBin) =>
-            Get<ResolveCardBinResponse>($"decision/bin/{cardBin}");
+        public IMiscellaneousApi Miscellaneous { get; }
+
+        [Obsolete("Use PayStack.Net.Miscellaneous.ResolveCardBin(cardBin) instead.")]
+        public ResolveCardBinResponse ResolveCardBin(string cardBin) => Miscellaneous.ResolveCardBin(cardBin);
 
         #region Utility Methods
 
@@ -83,12 +86,13 @@ namespace PayStack.Net
             where TR : class
         {
             var preparable = request as IPreparable;
+
             var queryString = "";
+            if (request != null)
+                queryString = "?" + request.ToQueryString();
+
             if (preparable != null)
-            {
                 preparable.Prepare();
-                queryString = "?" + preparable.ToQueryString();
-            }
 
             return JsonConvert.DeserializeObject<TR>(
                 _client.GetAsync(relativeUrl + queryString).Result.Content.ReadAsStringAsync().Result

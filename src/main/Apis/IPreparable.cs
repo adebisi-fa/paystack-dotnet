@@ -10,7 +10,7 @@ namespace PayStack.Net
 
     public static class Extension
     {
-        public static string ToQueryString(this IPreparable request)
+        public static string ToQueryString(this object request)
         {
             var properties = from p in request.GetType().GetProperties()
                 let v = p.GetValue(request, null)

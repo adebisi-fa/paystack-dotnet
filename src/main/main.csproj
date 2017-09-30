@@ -1,122 +1,32 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A67593F3-399B-429F-8653-5AB8CFF7B462}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PayStack.Net</RootNamespace>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>Paystack.Net</PackageId>
+    <Title>PayStack API for .Net</Title>
+    <Version>0.7.0</Version>
+    <Authors>Adebisi Foluso A.</Authors>
+    <Company />
+    <Product>PayStack.Net</Product>
+    <Description>PayStack API for .Net Developers.</Description>
+    <Copyright>Copyright 2016</Copyright>
+    <PackageLicenseUrl>https://github.com/adebisi-fa/paystack-dotnet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/adebisi-fa/paystack-dotnet</PackageProjectUrl>
+    <PackageIconUrl>https://cdn-images-1.medium.com/fit/c/100/100/1*We_5HSqJAUVETQ7xgcJNQQ.png</PackageIconUrl>
+    <PackageReleaseNotes>-- v0.7.0 --
+* All featureset albeit with .Net Core 2.0 support!
+
+-- up to v0.6.6 --
+Implements PayStack Standard Flow along with APIs for Transactions, Customers, SubAccounts, among others.</PackageReleaseNotes>
+    <NeutralLanguage></NeutralLanguage>
+    <PackageTags>PayStack Payment</PackageTags>
+    <RepositoryType>Git</RepositoryType>
+    <RepositoryUrl>https://github.com/adebisi-fa/paystack-dotnet.git</RepositoryUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <AssemblyName>PayStack.Net</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <RootNamespace>PayStack.Net</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="XtremeIT.Library.Pins, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5f275dd942b1b995, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\external-libs\XtremeIT.Library.Pins.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Apis\Customers\Create.cs" />
-    <Compile Include="Apis\Customers\CustomersApi.cs" />
-    <Compile Include="Apis\Customers\Fetch.cs" />
-    <Compile Include="Apis\Customers\ICustomersApi.cs" />
-    <Compile Include="Apis\Customers\List.cs" />
-    <Compile Include="Apis\Customers\SetRiskAction.cs" />
-    <Compile Include="Apis\Customers\Update.cs" />
-    <Compile Include="Apis\Miscellaneous\ResolveCardBin.cs" />
-    <Compile Include="Apis\RequestMetadataExtender.cs" />
-    <Compile Include="Apis\Settlements\Fetch.cs" />
-    <Compile Include="Apis\Settlements\ISettlementsApi.cs" />
-    <Compile Include="Apis\Settlements\SettlementsApi.cs" />
-    <Compile Include="Apis\SubAccounts\Bank.cs" />
-    <Compile Include="Apis\SubAccounts\Create.cs" />
-    <Compile Include="Apis\SubAccounts\Fetch.cs" />
-    <Compile Include="Apis\SubAccounts\ISubAccountApi.cs" />
-    <Compile Include="Apis\SubAccounts\List.cs" />
-    <Compile Include="Apis\SubAccounts\SubAccountApi.cs" />
-    <Compile Include="Apis\SubAccounts\Update.cs" />
-    <Compile Include="Apis\Transactions\ChargeAuthorization.cs" />
-    <Compile Include="Apis\Transactions\Export.cs" />
-    <Compile Include="Apis\Transactions\Fetch.cs" />
-    <Compile Include="Apis\Transactions\Initialize.cs" />
-    <Compile Include="Apis\IPreparable.cs" />
-    <Compile Include="Apis\Transactions\ITransactionsApi.cs" />
-    <Compile Include="Apis\Transactions\List.cs" />
-    <Compile Include="Apis\Transactions\Timeline.cs" />
-    <Compile Include="Apis\Transactions\TransactionsApi.cs" />
-    <Compile Include="Apis\Transactions\Totals.cs" />
-    <Compile Include="Apis\Transactions\Verify.cs" />
-    <Compile Include="Apis\Utility.cs" />
-    <Compile Include="PayStackApi.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="nuget\paystack-dotnet.nuspec" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="nuget\lib\net45\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\MSBuildTasks.1.5.0.214\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.214\build\MSBuildTasks.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\MSBuildTasks.1.5.0.214\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuildTasks.1.5.0.214\build\MSBuildTasks.targets'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets -->
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-    <WebDownload Condition="!Exists('nuget.exe')" Filename="nuget.exe" FileUri="https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" />
-    <RemoveDir Directories="$(MSBuildProjectDirectory)\nuget\lib\net45\" />
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Release\$(AssemblyName).dll" DestinationFolder="$(MSBuildProjectDirectory)\nuget\lib\net45" />
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Release\XtremeIT.Library.Pins.dll" DestinationFolder="$(MSBuildProjectDirectory)\nuget\lib\net45" />
-    <Exec Command="nuget pack .\nuget\paystack-dotnet.nuspec">
-    </Exec>
-  </Target>
 </Project>
