@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace PayStack.Net
@@ -31,13 +30,8 @@ namespace PayStack.Net
         }
     }
 
-    public class CustomerCreateRequest
+    public class CustomerCreateRequest : RequestMetadataExtender
     {
-        public CustomerCreateRequest()
-        {
-            Metadata = new Dictionary<string, object>();
-        }
-
         public string Email { get; set; }
 
         [JsonProperty("first_name")]
@@ -47,8 +41,6 @@ namespace PayStack.Net
         public string LastName { get; set; }
 
         public string Phone { get; set; }
-
-        public Dictionary<string, object> Metadata { get; set; }
     }
 
     public class CustomerCreateResponse

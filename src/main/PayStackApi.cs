@@ -13,6 +13,7 @@ namespace PayStack.Net
         ITransactionsApi Transactions { get; }
         ICustomersApi Customers { get; }
         ISettlementsApi Settlements { get; }
+        ITransfersApi Transfers { get; }
     }
 
     public class PayStackApi : IPayStackApi
@@ -31,6 +32,7 @@ namespace PayStack.Net
             SubAccounts = new SubAccountApi(this);
             Settlements = new SettlementsApi(this);
             Miscellaneous = new MiscellaneousApi(this);
+            Transfers = new TransfersApi(this);
         }
 
         public static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
@@ -48,6 +50,8 @@ namespace PayStack.Net
         public ISettlementsApi Settlements { get; }
 
         public IMiscellaneousApi Miscellaneous { get; }
+
+        public ITransfersApi Transfers { get; }
 
         [Obsolete("Use PayStack.Net.Miscellaneous.ResolveCardBin(cardBin) instead.")]
         public ResolveCardBinResponse ResolveCardBin(string cardBin) => Miscellaneous.ResolveCardBin(cardBin);

@@ -14,7 +14,9 @@
     <PackageProjectUrl>https://github.com/adebisi-fa/paystack-dotnet</PackageProjectUrl>
     <PackageIconUrl>https://cdn-images-1.medium.com/fit/c/100/100/1*We_5HSqJAUVETQ7xgcJNQQ.png</PackageIconUrl>
     <PackageReleaseNotes>-- v0.7.0 --
-* All featureset albeit with .Net Core 2.0 support!
+* .Net Core support (implements .Net Standard 2.0).
+* "Miscellaneous" API now available [Complete].
+* "Transfer" API  (Bulk, Control, Initiate, List, &amp; Fetch) now available [Complete].
 
 -- up to v0.6.6 --
 Implements PayStack Standard Flow along with APIs for Transactions, Customers, SubAccounts, among others.</PackageReleaseNotes>

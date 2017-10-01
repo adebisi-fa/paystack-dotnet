@@ -1,15 +1,9 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace PayStack.Net
 {
-    public class CustomerUpdateRequest
+    public class CustomerUpdateRequest : RequestMetadataExtender
     {
-        public CustomerUpdateRequest()
-        {
-            Metadata = new Dictionary<string, object>();
-        }
-
         [JsonProperty("first_name")]
         public string FirstName { get; set; }
 
@@ -17,8 +11,6 @@ namespace PayStack.Net
         public string LastName { get; set; }
 
         public string Phone { get; set; }
-
-        public Dictionary<string, object> Metadata { get; set; }
     }
 
     public class CustomerUpdateResponse
