@@ -4,7 +4,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Paystack.Net</PackageId>
     <Title>PayStack API for .Net</Title>
-    <Version>0.7.0</Version>
+    <Version>0.7.1</Version>
     <Authors>Adebisi Foluso A.</Authors>
     <Company />
     <Product>PayStack.Net</Product>
@@ -13,10 +13,13 @@
     <PackageLicenseUrl>https://github.com/adebisi-fa/paystack-dotnet/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/adebisi-fa/paystack-dotnet</PackageProjectUrl>
     <PackageIconUrl>https://cdn-images-1.medium.com/fit/c/100/100/1*We_5HSqJAUVETQ7xgcJNQQ.png</PackageIconUrl>
-    <PackageReleaseNotes>-- v0.7.0 --
+    <PackageReleaseNotes>-- v0.7.1 --
+    * "Charge" API (Bank, Card, Authorization Code) now available [Complete].
+    
+    -- v0.7.0 --
 * .Net Core support (implements .Net Standard 2.0).
 * "Miscellaneous" API now available [Complete].
-* "Transfer" API  (Bulk, Control, Initiate, List, &amp; Fetch) now available [Complete].
+* "Funds Transfer" API  (Bulk, Control, Initiate, List, &amp; Fetch) now available [Complete].
 
 -- up to v0.6.6 --
 Implements PayStack Standard Flow along with APIs for Transactions, Customers, SubAccounts, among others.</PackageReleaseNotes>
