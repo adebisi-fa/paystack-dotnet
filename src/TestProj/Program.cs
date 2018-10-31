@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Configuration;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PayStack.Net;
 using PayStack.Net.Apis;
 
-namespace test_console
+namespace TestProj
 {
-    internal class Program
+    class Program
     {
         private static PayStackApi _api;
 
@@ -22,7 +23,7 @@ namespace test_console
         {
             // VerifyPaymentReference();
 
-            _api = new PayStackApi(ConfigurationManager.AppSettings["PayStackSecret"]);
+            _api = new PayStackApi("sk_test_e99df0019c15a05c958ce59ade539eb7b8f26f36");
 
             //
             // Miscellaneous
@@ -69,19 +70,23 @@ namespace test_console
 
         private async static void CreateRecepient()
         {
-
-
-            
-
-
             //TransfersApi api = new TransfersApi(_api);
-            TransferRecipientsApi tra = new TransferRecipientsApi(_api);
-            var result = await Task.Run(() => tra.Create("Jethro Daniel Ekozin", "0692105364", "032"));
-            if (!result.Status)
+            try
             {
 
-                //return RedirectToAction("wallet", Utils.GetDynamicMessage("BANK Issues, please try again later or contact us to resolve it.", MessageType.Info));
+                TransferRecipientsApi tra = new TransferRecipientsApi(_api);
+                var result = await Task.Run(() => tra.Create("Jethro Daniel Ekozin", "0692105364", "044"));
+                if (!result.Status)
+                {
+
+                    //return RedirectToAction("wallet", Utils.GetDynamicMessage("BANK Issues, please try again later or contact us to resolve it.", MessageType.Info));
+                }
             }
+            catch (Exception ex)
+            {
+
+            }
+           
 
             //bank.CustomerCode = result.Data.RecipientCode;
         }
@@ -197,6 +202,8 @@ namespace test_console
             response.Print();
         }
     }
+
+
 
     public static class Extensions
     {

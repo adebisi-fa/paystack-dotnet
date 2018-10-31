@@ -72,6 +72,8 @@ namespace PayStack.Net
 
         internal TR Post<TR, T>(string relativeUrl, T request)
         {
+
+           
             return JsonConvert.DeserializeObject<TR>(
                 _client.PostAsync(
                     relativeUrl,

@@ -6,11 +6,11 @@ namespace PayStack.Net
 {
     public class TransferRecipient
     {
-        public class Metadata : Dictionary<string, object>
-        {
-            [JsonProperty("job")]
-            public string Job { get; set; }
-        }
+        //public class Metadata : Dictionary<string, object>
+        //{
+        //    [JsonProperty("job")]
+        //    public string Job { get; set; }
+        //}
 
         public class Details
         {
@@ -41,7 +41,7 @@ namespace PayStack.Net
             public string Description { get; set; }
 
             [JsonProperty("metadata")]
-            public Metadata Metadata { get; set; }
+            public Dictionary<string,string> Metadata { get; set; }
 
             [JsonProperty("domain")]
             public string Domain { get; set; }
@@ -82,7 +82,7 @@ namespace PayStack.Net
         public TransferRecipient.Data Data { get; set; }
     }
 
-    public class CreateTransferRecipientRequest : RequestMetadataExtender
+    public class CreateTransferRecipientRequest 
     {
 
         [JsonProperty("type")]
@@ -102,5 +102,8 @@ namespace PayStack.Net
 
         [JsonProperty("currency")]
         public string Currency { get; set; }
+
+        [JsonProperty("metadata")]
+        public Dictionary<string, object> Metadata { get; set; } = null;
     }
 }
