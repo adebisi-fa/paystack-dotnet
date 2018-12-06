@@ -120,7 +120,7 @@ var response = api.SubAccounts.Create(request);
 ...
 ```
 
-## One more thing about `~Responses` (since v0.7.2)!
+## One more thing about `~Response` Types (since v0.7.2)!
 
 It is possible to run into situations where a property (`data.[property]`) are not directly exposed via the Typed Interface implemented by this library.  For such instances, PayStack.Net exposes the `.RawJson` property that contains the raw JSON content returned from the PayStack Server, as a `String`.
 
