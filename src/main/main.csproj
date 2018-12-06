@@ -16,6 +16,8 @@
     <PackageReleaseNotes>
     -- v0.7.2 --
     * Bug fix. Charge.Data field Url
+    * All response types now implements IHasRawResponse interface. This introduces 'RawJson' property which contains the raw server's JSON response.
+    
     -- v0.7.1 --
     * "Charge" API (Bank, Card, Authorization Code) now available [Complete].
     
