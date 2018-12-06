@@ -122,7 +122,7 @@ var response = api.SubAccounts.Create(request);
 
 ## One more thing about `~Response` Types (since v0.7.2)!
 
-For situations where some properties (`data.[property1][property2][...n]`) are not directly exposed via the Typed Interface implemented by this library, PayStack.Net `Response` types exposes the `.RawJson` property that contains the raw JSON content returned from the PayStack Server, as a `String`.
+For situations where some properties (`data.[property1][property2][...n]`) are not directly exposed via the Typed Interface implemented by this library, all PayStack.Net `~Response` types expose the `.RawJson` property that contains the raw JSON content returned from the PayStack Server, as a `String`.
 
 As a `String`, this value can be parsed using any .Net compatible JSON parser, for use.
 
