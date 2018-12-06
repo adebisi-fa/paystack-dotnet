@@ -6,7 +6,7 @@ namespace PayStack.Net
     {
     }
 
-    public class SubAccountFetchResponse
+    public class SubAccountFetchResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

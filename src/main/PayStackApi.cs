@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 namespace PayStack.Net
@@ -55,7 +56,7 @@ namespace PayStack.Net
         public ITransfersApi Transfers { get; }
 
         public IChargeApi Charge { get; }
-        
+
 
         [Obsolete("Use PayStack.Net.Miscellaneous.ResolveCardBin(cardBin) instead.")]
         public ResolveCardBinResponse ResolveCardBin(string cardBin) => Miscellaneous.ResolveCardBin(cardBin);
@@ -72,22 +73,41 @@ namespace PayStack.Net
 
         internal TR Post<TR, T>(string relativeUrl, T request)
         {
-            return JsonConvert.DeserializeObject<TR>(
-                _client.PostAsync(
+            var rawJson = _client.PostAsync(
                     relativeUrl,
                     new StringContent(PrepareRequest(request))
-                ).Result.Content.ReadAsStringAsync().Result
-            );
+                ).Result.Content.ReadAsStringAsync().Result;
+
+            return ParseAndResolveMetadata<TR>(ref rawJson);
+        }
+
+        private static TR ParseAndResolveMetadata<TR>(ref string rawJson)
+        {
+            var jo = JObject.Parse(rawJson);
+            var metadata = jo["data"]["metadata"];
+            if (metadata != null)
+            {
+                jo["data"]["metadata"] = JsonConvert.DeserializeObject<JObject>(metadata.ToString());
+            }
+
+            rawJson = jo.ToString();
+
+            var response = JsonConvert.DeserializeObject<TR>(jo.ToString());
+
+            if (typeof(IHasRawResponse).IsAssignableFrom(typeof(TR)))
+                (response as IHasRawResponse).RawJson = rawJson;
+
+            return response;
         }
 
         internal TR Put<TR, T>(string relativeUrl, T request)
         {
-            return JsonConvert.DeserializeObject<TR>(
-                _client.PutAsync(
+            var rawJson = _client.PutAsync(
                     relativeUrl,
                     new StringContent(PrepareRequest(request))
-                ).Result.Content.ReadAsStringAsync().Result
-            );
+                ).Result.Content.ReadAsStringAsync().Result;
+
+            return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
         internal TR Get<TR, T>(string relativeUrl, T request)
@@ -102,16 +122,14 @@ namespace PayStack.Net
             if (preparable != null)
                 preparable.Prepare();
 
-            return JsonConvert.DeserializeObject<TR>(
-                _client.GetAsync(relativeUrl + queryString).Result.Content.ReadAsStringAsync().Result
-            );
+            var rawJson = _client.GetAsync(relativeUrl + queryString).Result.Content.ReadAsStringAsync().Result;
+            return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
         internal TR Get<TR>(string relativeUrl)
         {
-            return JsonConvert.DeserializeObject<TR>(
-                _client.GetAsync(relativeUrl).Result.Content.ReadAsStringAsync().Result
-            );
+            var rawJson = _client.GetAsync(relativeUrl).Result.Content.ReadAsStringAsync().Result;
+            return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
         #endregion

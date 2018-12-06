@@ -92,7 +92,7 @@ namespace PayStack.Net
         public int Page { get; set; }
     }
 
-    public class CustomerListResponse
+    public class CustomerListResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

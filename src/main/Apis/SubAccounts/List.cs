@@ -88,7 +88,7 @@ namespace PayStack.Net
         public int Page { get; set; }
     }
 
-    public class SubAccountListResponse
+    public class SubAccountListResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

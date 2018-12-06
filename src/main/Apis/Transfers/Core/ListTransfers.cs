@@ -72,7 +72,7 @@ namespace PayStack.Net
         }
     }
 
-    public class ListTransfersResponse
+    public class ListTransfersResponse : HasRawResponse
     {
 
         [JsonProperty("status")]

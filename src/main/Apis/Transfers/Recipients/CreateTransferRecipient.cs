@@ -63,7 +63,7 @@ namespace PayStack.Net
         }
     }
 
-    public class CreateTransferRecipientResponse
+    public class CreateTransferRecipientResponse : HasRawResponse
     {
 
         [JsonProperty("status")]
@@ -78,7 +78,6 @@ namespace PayStack.Net
 
     public class CreateTransferRecipientRequest : RequestMetadataExtender
     {
-
         [JsonProperty("type")]
         public string Type { get; set; }
 

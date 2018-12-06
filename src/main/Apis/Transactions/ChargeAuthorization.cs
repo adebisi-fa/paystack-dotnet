@@ -32,7 +32,7 @@ namespace PayStack.Net
         }
     }
 
-    public class ChargeAuthorizationResponse
+    public class ChargeAuthorizationResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

@@ -52,7 +52,7 @@ namespace PayStack.Net
         public DateTime? To { get; set; }
     }
 
-    public class TransactionTotalsResponse
+    public class TransactionTotalsResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

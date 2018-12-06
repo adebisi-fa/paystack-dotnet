@@ -15,7 +15,7 @@ namespace PayStack.Net
         }
     }
 
-    public class ResolveAccountNumberResponse
+    public class ResolveAccountNumberResponse : HasRawResponse
     {
 
         [JsonProperty("status")]

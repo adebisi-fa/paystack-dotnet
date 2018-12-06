@@ -51,7 +51,7 @@ namespace PayStack.Net
         public string Recipient { get; set; }
     }
 
-    public class InitiateTransferResponse
+    public class InitiateTransferResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

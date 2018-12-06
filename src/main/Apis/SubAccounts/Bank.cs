@@ -46,7 +46,7 @@ namespace PayStack.Net
         public int Page { get; set; }
     }
 
-    public class PayStackBankResponse
+    public class PayStackBankResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

@@ -87,7 +87,7 @@ namespace PayStack.Net
 
             [JsonProperty("status")]
             public string Status { get; set; }
-            
+
             [JsonProperty("url")]
             public string Url { get; set; }
 
@@ -205,7 +205,7 @@ namespace PayStack.Net
         public string Pin { get; set; }
     }
 
-    public class ChargeResponse
+    public class ChargeResponse : HasRawResponse
     {
 
         [JsonProperty("status")]

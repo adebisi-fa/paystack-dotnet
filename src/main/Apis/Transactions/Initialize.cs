@@ -46,7 +46,7 @@ namespace PayStack.Net
         }
     }
 
-    public class TransactionInitializeResponse
+    public class TransactionInitializeResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

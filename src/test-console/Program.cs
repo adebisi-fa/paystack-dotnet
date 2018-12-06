@@ -2,7 +2,6 @@
 using System.Configuration;
 using Newtonsoft.Json;
 using PayStack.Net;
-using PayStack.Net.Apis;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 
@@ -29,7 +28,8 @@ namespace test_console
             _api = new PayStackApi(config["PayStackSecret"]);
 
             // Transfers
-            CreateTransferRecipient();
+            //CreateTransferRecipient();
+            AccessRawJsonSentFromServer();
             
             //
             // Miscellaneous
@@ -75,6 +75,21 @@ namespace test_console
             // TransactionList_Setup();
             // InitializeRequest_Setup();
             // VerifyPaymentReference();
+        }
+
+        private static void AccessRawJsonSentFromServer()
+        {
+            var response = _api.Transfers.Recipients.Create("ADEBISI Foluso A.", "0043216012", "058");
+            if (response is IHasRawResponse rawResponse)
+            {
+                Console.WriteLine("Raw JSON from Server");
+                Console.WriteLine(response.RawJson);
+                Console.WriteLine();
+
+                Console.WriteLine("Raw JSON from Server as JObject");
+                rawResponse.AsJObject().Print();
+                Console.WriteLine();
+            }
         }
 
         private static void CreateTransferRecipient()

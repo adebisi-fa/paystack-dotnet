@@ -33,7 +33,7 @@ namespace PayStack.Net
         }
     }
 
-    public class ResolveBVNResponse
+    public class ResolveBVNResponse : HasRawResponse
     {
 
         [JsonProperty("status")]

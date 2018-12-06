@@ -41,7 +41,7 @@ namespace PayStack.Net
         }
     }
 
-    public class ListBanksResponse
+    public class ListBanksResponse : HasRawResponse
     {
 
         [JsonProperty("status")]

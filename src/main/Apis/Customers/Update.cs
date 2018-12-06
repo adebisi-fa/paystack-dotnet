@@ -13,7 +13,7 @@ namespace PayStack.Net
         public string Phone { get; set; }
     }
 
-    public class CustomerUpdateResponse
+    public class CustomerUpdateResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }
