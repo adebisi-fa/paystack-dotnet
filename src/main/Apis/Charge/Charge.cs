@@ -87,6 +87,9 @@ namespace PayStack.Net
 
             [JsonProperty("status")]
             public string Status { get; set; }
+            
+            [JsonProperty("url")]
+            public string Url { get; set; }
 
             [JsonProperty("reference")]
             public string Reference { get; set; }
