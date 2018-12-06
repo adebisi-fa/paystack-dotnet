@@ -119,3 +119,9 @@ var response = api.SubAccounts.Create(request);
 // Use response as needed
 ...
 ```
+
+## One more thing about `~Responses` (since v0.7.2)!
+
+It is possible to run into situations where a property (`data.[property]`) are not directly exposed via the Typed Interface implemented by this library.  For such instances, PayStack.Net exposes the `.RawJson` property that contains the raw JSON content returned from the PayStack Server, as a `String`.
+
+To make it easier to work this raw JSON, all `~Response` types has an extension method, `.AsJObject()`, which returns a `JObject` instance.  With this object, any property of the returned JSON can be retrieved as described on [this page](https://www.newtonsoft.com/json/help/html/QueryingLINQtoJSON.htm). 
