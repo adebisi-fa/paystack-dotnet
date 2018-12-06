@@ -6,12 +6,6 @@ namespace PayStack.Net
 {
     public class TransferRecipient
     {
-        public class Metadata : Dictionary<string, object>
-        {
-            [JsonProperty("job")]
-            public string Job { get; set; }
-        }
-
         public class Details
         {
 

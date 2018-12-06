@@ -3,6 +3,8 @@ using System.Configuration;
 using Newtonsoft.Json;
 using PayStack.Net;
 using PayStack.Net.Apis;
+using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace test_console
 {
@@ -19,23 +21,34 @@ namespace test_console
 
         private static void Main(string[] args)
         {
-            // VerifyPaymentReference();
+            var config = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
+                .AddJsonFile("appsettings.json", false)
+                .Build();
 
-            _api = new PayStackApi(ConfigurationManager.AppSettings["PayStackSecret"]);
+            _api = new PayStackApi(config["PayStackSecret"]);
 
+            // Transfers
+            CreateTransferRecipient();
+            
             //
             // Miscellaneous
             //
-            ListBanks();
-            var response = _api.Miscellaneous.ResolveAccountNumber("0043216012", "058");
-            response.Print();
+
+            // 1.
+            // ListBanks();
+
+            // 2. 
+            // var response = _api.Miscellaneous.ResolveAccountNumber("0043216012", "058");
+            //response.Print();
+
+            // 3.
+            //_api.ResolveCardBin("412345");
+
             //
             // Settlements
             //
             // SettlementsFetch();
-
-            // Miscellaneous
-            //_api.ResolveCardBin("412345");
 
             //
             // Sub Accounts
@@ -50,17 +63,24 @@ namespace test_console
             // CustomersList();
             // CustomerFetch();
             // CustomerUpdate();
-            //CustomerRiskAction();
+            // CustomerRiskAction();
 
             //
             // Transactions
             //
             // TransactionExport_Setup();
-            //TransactionTotals_Setup();
-            //TransactionTimeline_Setup();
+            // TransactionTotals_Setup();
+            // TransactionTimeline_Setup();
             // TransactionFetch_Setup();
             // TransactionList_Setup();
             // InitializeRequest_Setup();
+            // VerifyPaymentReference();
+        }
+
+        private static void CreateTransferRecipient()
+        {
+            var response = _api.Transfers.Recipients.Create("ADEBISI Foluso A.", "0043216012", "058");
+            response.Print();
         }
 
         private static void ListBanks()
