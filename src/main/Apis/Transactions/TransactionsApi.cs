@@ -43,7 +43,19 @@ namespace PayStack.Net
             bool settled = false, string paymentPage = null) =>
             _api.Get<TransactionExportResponse, TransactionExportRequest>(
                 "transaction/export",
-                new TransactionExportRequest { From = from, To = to, Settled = settled, PaymentPage = paymentPage }
+                new TransactionExportRequest { From = from, To = to, Settled = settled, Payment_Page = paymentPage }
+            );
+
+        public ChargeAuthorizationResponse ChargeAuthorization(string authorizationCode, string email, string amount) => 
+            ChargeAuthorization(new ChargeAuthorizationRequest{
+                AuthorizationCode = authorizationCode,
+                Email = email,
+                AmountInKobo = amount
+            });
+
+        public ChargeAuthorizationResponse ChargeAuthorization(ChargeAuthorizationRequest request) =>
+            _api.Post<ChargeAuthorizationResponse, ChargeAuthorizationRequest>(
+                "transaction/charge_authorization", request
             );
     }
 }

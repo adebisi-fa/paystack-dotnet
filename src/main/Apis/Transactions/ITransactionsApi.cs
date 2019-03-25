@@ -11,7 +11,8 @@ namespace PayStack.Net
         TransactionFetchResponse Fetch(string transactionId);
         TransactionTimelineResponse Timeline(string transactionIdOrReference);
         TransactionTotalsResponse Totals(DateTime? from = null, DateTime? to = null);
-
+        ChargeAuthorizationResponse ChargeAuthorization(string authorizationCode, string email, string amount);
+        ChargeAuthorizationResponse ChargeAuthorization(ChargeAuthorizationRequest request);
         TransactionExportResponse Export(DateTime? from = null, DateTime? to = null,
             bool settled = false, string paymentPage = null);
     }
