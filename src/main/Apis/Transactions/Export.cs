@@ -7,8 +7,20 @@ namespace PayStack.Net
     {
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
-        public bool Settled { get; set; }
-        public string PaymentPage { get; set; }
+        public bool? Settled { get; set; }
+
+        // Had to go against the rule here (use of underscore), because of query params!
+        public string Payment_Page { get; set; }
+
+        public int? Customer { get; set; }
+        
+        public string Currency { get; set; }
+
+        public int? Settlement { get; set; }
+
+        public int? Amount { get; set; }
+
+        public string Status { get; set; }
     }
 
     public class TransactionExport
