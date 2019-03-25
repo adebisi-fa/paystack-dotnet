@@ -45,5 +45,10 @@ namespace PayStack.Net
                 "transaction/export",
                 new TransactionExportRequest { From = from, To = to, Settled = settled, PaymentPage = paymentPage }
             );
+
+        public ChargeAuthorizationResponse ChargeAuthorization(ChargeAuthorizationRequest request)
+        {
+            return _api.Post<ChargeAuthorizationResponse, ChargeAuthorizationRequest>("transaction/charge_authorization", request);
+        }
     }
 }

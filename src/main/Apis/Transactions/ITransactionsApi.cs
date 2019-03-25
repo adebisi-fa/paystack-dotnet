@@ -7,6 +7,7 @@ namespace PayStack.Net
         TransactionInitializeResponse Initialize(string email, int amount, string reference = null, bool makeReferenceUnique = false);
         TransactionInitializeResponse Initialize(TransactionInitializeRequest request, bool makeReferenceUnique = false);
         TransactionVerifyResponse Verify(string reference);
+        ChargeAuthorizationResponse ChargeAuthorization(ChargeAuthorizationRequest request);
         TransactionListResponse List(TransactionListRequest request = null);
         TransactionFetchResponse Fetch(string transactionId);
         TransactionTimelineResponse Timeline(string transactionIdOrReference);
