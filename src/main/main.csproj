@@ -4,16 +4,21 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Paystack.Net</PackageId>
     <Title>PayStack API for .Net</Title>
-    <Version>0.7.2</Version>
+    <Version>0.7.3</Version>
     <Authors>Adebisi Foluso A.</Authors>
     <Company />
     <Product>PayStack.Net</Product>
     <Description>PayStack API for .Net Developers.</Description>
-    <Copyright>Copyright 2016</Copyright>
-    <PackageLicenseUrl>https://github.com/adebisi-fa/paystack-dotnet/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright 2019</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/adebisi-fa/paystack-dotnet</PackageProjectUrl>
     <PackageIconUrl>https://cdn-images-1.medium.com/fit/c/100/100/1*We_5HSqJAUVETQ7xgcJNQQ.png</PackageIconUrl>
     <PackageReleaseNotes>
+    -- v0.7.3 --
+    * Bug fix. Transaction's ChargeAuthorization method included (big thanks to Aghogho Bernard - @teghoz)
+    * Transaction's CheckAuthorization and RequestReauthorization methods now included.
+    * Expose more query params to the Transaction's Export method.
+
     -- v0.7.2 --
     * Bug fix. Charge.Data field Url
     * All response types now implements IHasRawResponse interface. This introduces 'RawJson' property which contains the raw server's JSON response.
