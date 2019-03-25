@@ -16,7 +16,7 @@ namespace PayStack.Net
 
         public TransactionInitializeResponse Initialize(TransactionInitializeRequest request, bool makeReferenceUnique = false)
         {
-            if (makeReferenceUnique)
+            if (makeReferenceUnique && request.Reference != null)
                 request.Reference = $"{request.Reference}-{Guid.NewGuid().ToString().Substring(0, 8)}";
             return _api.Post<TransactionInitializeResponse, TransactionInitializeRequest>("transaction/initialize", request);
         }
@@ -46,16 +46,53 @@ namespace PayStack.Net
                 new TransactionExportRequest { From = from, To = to, Settled = settled, Payment_Page = paymentPage }
             );
 
-        public ChargeAuthorizationResponse ChargeAuthorization(string authorizationCode, string email, string amount) => 
-            ChargeAuthorization(new ChargeAuthorizationRequest{
+        public ChargeAuthorizationResponse ChargeAuthorization(string authorizationCode, string email, int amountInKobo, string reference = null, bool makeReferenceUnique = false) =>
+            ChargeAuthorization(new ChargeAuthorizationRequest
+            {
+                Reference = reference,
                 AuthorizationCode = authorizationCode,
                 Email = email,
-                AmountInKobo = amount
+                AmountInKobo = amountInKobo
             });
 
-        public ChargeAuthorizationResponse ChargeAuthorization(ChargeAuthorizationRequest request) =>
-            _api.Post<ChargeAuthorizationResponse, ChargeAuthorizationRequest>(
+        public ChargeAuthorizationResponse ChargeAuthorization(ChargeAuthorizationRequest request, bool makeReferenceUnique = false)
+        {
+            if (makeReferenceUnique && request.Reference != null)
+                request.Reference = $"{request.Reference}-{Guid.NewGuid().ToString().Substring(0, 8)}";
+            return _api.Post<ChargeAuthorizationResponse, ChargeAuthorizationRequest>(
                 "transaction/charge_authorization", request
+            );
+        }
+
+        public ReAuthorizationResponse RequestReAuthorization(string authorizationCode, string email, int amountInKobo, string reference = null, bool makeReferenceUnique = false) =>
+            RequestReAuthorization(new ReAuthorizationRequest
+            {
+                AuthorizationCode = authorizationCode,
+                Email = email,
+                AmountInKobo = amountInKobo,
+                Reference = reference
+            });
+
+        public ReAuthorizationResponse RequestReAuthorization(ReAuthorizationRequest request, bool makeReferenceUnique = false)
+        {
+            if (makeReferenceUnique && request.Reference != null)
+                request.Reference = $"{request.Reference}-{Guid.NewGuid().ToString().Substring(0, 8)}";
+            return _api.Post<ReAuthorizationResponse, ReAuthorizationRequest>(
+                "transaction/request_reauthorization", request
+            );
+        }
+
+        public CheckAuthorizationResponse CheckAuthorization(string authorizationCode, string email, int amountInKobo) =>
+            CheckAuthorization(new CheckAuthorizationRequest
+            {
+                AuthorizationCode = authorizationCode,
+                Email = email,
+                AmountInKobo = amountInKobo
+            });
+
+        public CheckAuthorizationResponse CheckAuthorization(CheckAuthorizationRequest request) =>
+            _api.Post<CheckAuthorizationResponse, CheckAuthorizationRequest>(
+                "transaction/check_authorization", request
             );
     }
 }

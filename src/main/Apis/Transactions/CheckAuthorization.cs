@@ -3,9 +3,8 @@ using Newtonsoft.Json;
 
 namespace PayStack.Net
 {
-    public class ChargeAuthorizationRequest : RequestMetadataExtender
+    public class CheckAuthorizationRequest
     {
-        public string Reference { get; set; }
 
         [JsonProperty("authorization_code")]
         public string AuthorizationCode { get; set; }
@@ -17,15 +16,9 @@ namespace PayStack.Net
 
         public string Email { get; set; }
 
-        public string SubAccount { get; set; }
-
-        [JsonProperty("transaction_charge")]
-        public int TransactionCharge { get; set; }
-
-        public string Bearer { get; set; }
     }
 
-    public class ChargeAuthorizationResponse : HasRawResponse
+    public class CheckAuthorizationResponse : HasRawResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }
@@ -34,6 +27,13 @@ namespace PayStack.Net
         public string Message { get; set; }
 
         [JsonProperty("data")]
-        public TransactionList.Datum Data { get; set; }
+        public CheckAuthorizationData Data { get; set; }
+    }
+
+    public class CheckAuthorizationData
+    {
+        [JsonProperty("amount")]
+        public string AmountInKobo { get; set; }
+        public string Currency { get; set; }
     }
 }
