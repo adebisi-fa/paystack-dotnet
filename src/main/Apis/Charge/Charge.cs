@@ -142,7 +142,15 @@ namespace PayStack.Net
         public string AccountNumber { get; set; }
     }
 
-    public class BankChargeRequest : RequestMetadataExtender
+    public class ChargeRequest : RequestMetadataExtender
+    {
+        public string Reference { get; set; }
+
+        [JsonProperty("device_id")]
+        public string DeviceId { get; set; }
+    }
+
+    public class BankChargeRequest : ChargeRequest
     {
         [JsonProperty("email")]
         public string Email { get; set; }
@@ -173,7 +181,7 @@ namespace PayStack.Net
         public string ExpiryYear { get; set; }
     }
 
-    public class CardChargeRequest : RequestMetadataExtender
+    public class CardChargeRequest : ChargeRequest
     {
 
         [JsonProperty("email")]
@@ -189,7 +197,7 @@ namespace PayStack.Net
         public string Pin { get; set; }
     }
 
-    public class AuthorizationCodeChargeRequest : RequestMetadataExtender
+    public class AuthorizationCodeChargeRequest : ChargeRequest
     {
 
         [JsonProperty("email")]

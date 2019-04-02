@@ -11,21 +11,28 @@ namespace PayStack.Net
             this._api = api;
         }
 
-        public ChargeResponse ChargeAuthorizationCode(string email, string amount, string authorizationCode, string pin) =>
+        public ChargeResponse ChargeAuthorizationCode(string email, string amount, string authorizationCode, string pin, string reference = null, bool makeReferenceUnique = false) =>
             ChargeAuthorizationCode(
                 new AuthorizationCodeChargeRequest
                 {
                     Email = email,
                     Amount = amount,
                     AuthorizationCode = authorizationCode,
-                    Pin = pin
-                }
+                    Pin = pin,
+                    Reference = makeReferenceUnique && reference != null ?
+                        $"{reference}-{Guid.NewGuid().ToString().Substring(0, 8)}" : reference
+                },
+                makeReferenceUnique
             );
 
-        public ChargeResponse ChargeAuthorizationCode(AuthorizationCodeChargeRequest request) =>
-            _api.Post<ChargeResponse, AuthorizationCodeChargeRequest>("charge", request);
+        public ChargeResponse ChargeAuthorizationCode(AuthorizationCodeChargeRequest request, bool makeReferenceUnique = false)
+        {
+            if (makeReferenceUnique && request.Reference != null)
+                request.Reference = $"{request.Reference}-{Guid.NewGuid().ToString().Substring(0, 8)}";
+            return _api.Post<ChargeResponse, AuthorizationCodeChargeRequest>("charge", request);
+        }
 
-        public ChargeResponse ChargeBank(string email, string amount, string bankCode, string bankAccountNumber) =>
+        public ChargeResponse ChargeBank(string email, string amount, string bankCode, string bankAccountNumber, string reference = null, bool makeReferenceUnique = false) =>
             ChargeBank(
                 new BankChargeRequest
                 {
@@ -35,14 +42,21 @@ namespace PayStack.Net
                     {
                         Code = bankCode,
                         AccountNumber = bankAccountNumber
-                    }
-                }
+                    },
+                    Reference = reference
+                },
+                makeReferenceUnique
             );
 
-        public ChargeResponse ChargeBank(BankChargeRequest request) =>
-            _api.Post<ChargeResponse, BankChargeRequest>("charge", request);
+        public ChargeResponse ChargeBank(BankChargeRequest request, bool makeReferenceUnique = false)
+        {
+            if (makeReferenceUnique && request.Reference != null)
+                request.Reference = $"{request.Reference}-{Guid.NewGuid().ToString().Substring(0, 8)}";
 
-        public ChargeResponse ChargeCard(string email, string amount, string cardNumber, string cardCvv, string cardExpiryMonth, string cardExpiryYear, string pin) =>
+            return _api.Post<ChargeResponse, BankChargeRequest>("charge", request);
+        }
+
+        public ChargeResponse ChargeCard(string email, string amount, string cardNumber, string cardCvv, string cardExpiryMonth, string cardExpiryYear, string pin, string reference = null, bool makeReferenceUnique = false) =>
             ChargeCard(
                 new CardChargeRequest
                 {
@@ -55,12 +69,18 @@ namespace PayStack.Net
                         ExpiryMonth = cardExpiryMonth,
                         ExpiryYear = cardExpiryYear
                     },
-                    Pin = pin
+                    Pin = pin,
+                    Reference = reference
                 }
             );
 
-        public ChargeResponse ChargeCard(CardChargeRequest request) =>
-            _api.Post<ChargeResponse, CardChargeRequest>("charge", request);
+        public ChargeResponse ChargeCard(CardChargeRequest request, bool makeReferenceUnique = false)
+        {
+            if (makeReferenceUnique && request.Reference != null)
+                request.Reference = $"{request.Reference}-{Guid.NewGuid().ToString().Substring(0, 8)}";
+
+            return _api.Post<ChargeResponse, CardChargeRequest>("charge", request);
+        }
 
         public ChargeResponse CheckPendingCharge(string reference) =>
             _api.Get<ChargeResponse>($"charge/{reference}");

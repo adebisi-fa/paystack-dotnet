@@ -53,7 +53,7 @@ namespace PayStack.Net
                 AuthorizationCode = authorizationCode,
                 Email = email,
                 AmountInKobo = amountInKobo
-            });
+            }, makeReferenceUnique);
 
         public ChargeAuthorizationResponse ChargeAuthorization(ChargeAuthorizationRequest request, bool makeReferenceUnique = false)
         {
@@ -71,7 +71,7 @@ namespace PayStack.Net
                 Email = email,
                 AmountInKobo = amountInKobo,
                 Reference = reference
-            });
+            }, makeReferenceUnique);
 
         public ReAuthorizationResponse RequestReAuthorization(ReAuthorizationRequest request, bool makeReferenceUnique = false)
         {
