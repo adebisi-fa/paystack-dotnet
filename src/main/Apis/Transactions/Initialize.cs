@@ -22,6 +22,9 @@ namespace PayStack.Net
         [JsonProperty("transaction_charge")]
         public int TransactionCharge { get; set; }
 
+        [JsonProperty("currency")]
+        public string Currency { get; set; } = "NGN";
+
         public string Bearer { get; set; }
     }
 
