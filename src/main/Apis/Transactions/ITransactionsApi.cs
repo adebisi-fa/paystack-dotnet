@@ -4,7 +4,7 @@ namespace PayStack.Net
 {
     public interface ITransactionsApi
     {
-        TransactionInitializeResponse Initialize(string email, int amountInKobo, string reference = null, bool makeReferenceUnique = false);
+        TransactionInitializeResponse Initialize(string email, int amountInKobo, string reference = null, bool makeReferenceUnique = false, string currency = "NGN");
         TransactionInitializeResponse Initialize(TransactionInitializeRequest request, bool makeReferenceUnique = false);
         TransactionVerifyResponse Verify(string reference);
         TransactionListResponse List(TransactionListRequest request = null);

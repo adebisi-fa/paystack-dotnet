@@ -11,8 +11,8 @@ namespace PayStack.Net
             _api = api;
         }
 
-        public TransactionInitializeResponse Initialize(string email, int amount, string reference = null, bool makeReferenceUnique = false)
-            => Initialize(new TransactionInitializeRequest { Reference = reference, Email = email, AmountInKobo = amount }, makeReferenceUnique);
+        public TransactionInitializeResponse Initialize(string email, int amount, string reference = null, bool makeReferenceUnique = false, string currency = "NGN")
+            => Initialize(new TransactionInitializeRequest { Reference = reference, Email = email, AmountInKobo = amount, Currency = currency }, makeReferenceUnique);
 
         public TransactionInitializeResponse Initialize(TransactionInitializeRequest request, bool makeReferenceUnique = false)
         {
