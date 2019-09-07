@@ -85,7 +85,7 @@ namespace PayStack.Net
         {
             var jo = JObject.Parse(rawJson);
             var data = jo["data"];
-            if (!(data is JArray) && data["metadata"] != null)
+            if (data != null && !(data is JArray) && data["metadata"] != null)
             {
                 var metadata = data["metadata"];
                 jo["data"]["metadata"] = JsonConvert.DeserializeObject<JObject>(metadata.ToString());
@@ -93,7 +93,7 @@ namespace PayStack.Net
 
             rawJson = jo.ToString();
 
-            var response = JsonConvert.DeserializeObject<TR>(jo.ToString());
+            var response = JsonConvert.DeserializeObject<TR>(rawJson);
 
             if (typeof(IHasRawResponse).IsAssignableFrom(typeof(TR)))
                 (response as IHasRawResponse).RawJson = rawJson;
