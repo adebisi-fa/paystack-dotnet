@@ -4,7 +4,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Paystack.Net</PackageId>
     <Title>PayStack API for .Net</Title>
-    <Version>0.7.5</Version>
+    <Version>0.7.6</Version>
     <Authors>Adebisi Foluso A.</Authors>
     <Company />
     <Product>PayStack.Net</Product>
@@ -14,6 +14,10 @@
     <PackageProjectUrl>https://github.com/adebisi-fa/paystack-dotnet</PackageProjectUrl>
     <PackageIconUrl>https://cdn-images-1.medium.com/fit/c/100/100/1*We_5HSqJAUVETQ7xgcJNQQ.png</PackageIconUrl>
     <PackageReleaseNotes>
+    -- v0.7.6 --
+    * Bug fix: Ensure response.data exists before parsing metadata, especially when response.status is 'false'. #16 
+    
+    
     -- v0.7.5 --
     * Bug fix: #15 Incorrect attempt to parse 'metadata' from JArray responses.
     * Enable multi-currency for transaction initializer (Inspired by @django101, #14)
