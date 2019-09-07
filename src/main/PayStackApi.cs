@@ -84,9 +84,10 @@ namespace PayStack.Net
         private static TR ParseAndResolveMetadata<TR>(ref string rawJson)
         {
             var jo = JObject.Parse(rawJson);
-            var metadata = jo["data"]["metadata"];
-            if (metadata != null)
+            var data = jo["data"];
+            if (!(data is JArray) && data["metadata"] != null)
             {
+                var metadata = data["metadata"];
                 jo["data"]["metadata"] = JsonConvert.DeserializeObject<JObject>(metadata.ToString());
             }
 
