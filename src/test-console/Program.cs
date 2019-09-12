@@ -29,7 +29,7 @@ namespace test_console
 
             // Transfers
             //CreateTransferRecipient();
-            AccessRawJsonSentFromServer();
+            // AccessRawJsonSentFromServer();
             
             //
             // Miscellaneous
@@ -44,6 +44,9 @@ namespace test_console
 
             // 3.
             //_api.ResolveCardBin("412345");
+
+            // 4.
+            _api.Miscellaneous.ResolveBVN("USER_BVN_HERE").Print();
 
             //
             // Settlements
@@ -79,7 +82,7 @@ namespace test_console
 
         private static void AccessRawJsonSentFromServer()
         {
-            var response = _api.Transfers.Recipients.Create("ADEBISI Foluso A.", "0043216012", "058");
+            var response = _api.Transfers.Recipients.Create("ADEBISI Foluso A.", "0043216013", "058");
             if (response is IHasRawResponse rawResponse)
             {
                 Console.WriteLine("Raw JSON from Server");

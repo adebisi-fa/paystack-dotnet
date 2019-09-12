@@ -18,7 +18,7 @@ namespace PayStack.Net
             bank_code = bankCode
         });
 
-        public ResolveBVNResponse ResolveBVN(string bvn) => _api.Get<ResolveBVNResponse>($"resolve_bvn/{bvn}");
+        public ResolveBVNResponse ResolveBVN(string bvn) => _api.Get<ResolveBVNResponse>($"bank/resolve_bvn/{bvn}");
 
         public ResolveCardBinResponse ResolveCardBin(string cardBin) => _api.Get<ResolveCardBinResponse>($"decision/bin/{cardBin}");
 
