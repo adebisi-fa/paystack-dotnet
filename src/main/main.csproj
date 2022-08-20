@@ -4,16 +4,21 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Paystack.Net</PackageId>
     <Title>PayStack API for .Net</Title>
-    <Version>0.7.7</Version>
+    <Version>1.0.0</Version>
     <Authors>Adebisi Foluso A.</Authors>
     <Company />
     <Product>PayStack.Net</Product>
     <Description>PayStack API for .Net Developers.</Description>
-    <Copyright>Copyright 2019</Copyright>
+    <Copyright>Since 2019</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/adebisi-fa/paystack-dotnet</PackageProjectUrl>
     <PackageIconUrl>https://cdn-images-1.medium.com/fit/c/100/100/1*We_5HSqJAUVETQ7xgcJNQQ.png</PackageIconUrl>
     <PackageReleaseNotes>
+    -- v1.0.0 --
+    * Feat: 100% API coverage (via the Type-less API)
+    * Bug fix: Closes #21 (Thanks @thrizy, sorry it took so long!)
+    * Feat: Adds PartialDebit (Typed API).
+
     -- v0.7.7 --
     * Bug fix: Correct the BVN endpoint. #17 
     
