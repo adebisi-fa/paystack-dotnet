@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace PayStack.Net
 {    
-    public class TransferOtpResponse : HasRawResponse
+    public class TransferOtpResponse : HasRawResponse, IApiResponse
     {
 
         [JsonProperty("status")]

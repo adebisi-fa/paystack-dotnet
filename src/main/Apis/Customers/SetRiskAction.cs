@@ -22,7 +22,7 @@ namespace PayStack.Net
         public string RiskAction { get; set; }
     }
 
-    public class CustomerSetRiskActionResponse : HasRawResponse
+    public class CustomerSetRiskActionResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

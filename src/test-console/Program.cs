@@ -7,6 +7,17 @@ using System.IO;
 
 namespace test_console
 {
+    public class DtoUpdateCustomer
+    {
+        [JsonProperty("customer_code")]
+        public string CustomerCode { get; set; }
+
+        public string Domain { get; set; }
+
+        [JsonProperty("integration")]
+        public int Integration { get; set; }
+    }
+
     internal class Program
     {
         private static PayStackApi _api;
@@ -27,10 +38,12 @@ namespace test_console
 
             _api = new PayStackApi(config["PayStackSecret"]);
 
+            // TypelessAPISample();
+
             // Transfers
             //CreateTransferRecipient();
             // AccessRawJsonSentFromServer();
-            
+
             //
             // Miscellaneous
             //
@@ -46,7 +59,7 @@ namespace test_console
             //_api.ResolveCardBin("412345");
 
             // 4.
-            _api.Miscellaneous.ResolveBVN("USER_BVN_HERE").Print();
+            // _api.Miscellaneous.ResolveBVN("USER_BVN_HERE").Print();
 
             //
             // Settlements
@@ -78,6 +91,20 @@ namespace test_console
             // TransactionList_Setup();
             // InitializeRequest_Setup();
             // VerifyPaymentReference();
+        }
+
+        private static void TypelessAPISample()
+        {
+            var result = _api.Put<ApiResponse<DtoUpdateCustomer>, dynamic>("customer/CUS_y29yudq6e43rh3w", new
+            {
+                first_name = "Firstname",
+                last_name = "LASTNAME",
+                phone = "080000000"
+            });
+            if (result.Status)
+                Console.WriteLine(result.Data.CustomerCode);
+            else
+                Console.WriteLine(result.Message);
         }
 
         private static void AccessRawJsonSentFromServer()

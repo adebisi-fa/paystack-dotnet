@@ -4,7 +4,7 @@ namespace PayStack.Net
 {
     public interface ITransactionsApi
     {
-        TransactionInitializeResponse Initialize(string email, int amountInKobo, string reference = null, bool makeReferenceUnique = false, string currency = "NGN");
+        TransactionInitializeResponse Initialize(string email, int amountInKobo, string reference = null, bool makeReferenceUnique = false, string currency = "NGN", string splitCode = null);
         TransactionInitializeResponse Initialize(TransactionInitializeRequest request, bool makeReferenceUnique = false);
         TransactionVerifyResponse Verify(string reference);
         TransactionListResponse List(TransactionListRequest request = null);
@@ -20,5 +20,7 @@ namespace PayStack.Net
 
         CheckAuthorizationResponse CheckAuthorization(string authorizationCode, string email, int amountInKobo);
         CheckAuthorizationResponse CheckAuthorization(CheckAuthorizationRequest request);
+        TransactionPartialDebitResponse PartialDebit(TransactionPartialDebitRequest request);
+        TransactionPartialDebitResponse PartialDebit(string authorizationCode, string currency, string amount, string email);
     }
 }

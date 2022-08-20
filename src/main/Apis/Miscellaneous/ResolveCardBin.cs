@@ -32,7 +32,7 @@ namespace PayStack.Net
         }
     }
 
-    public class ResolveCardBinResponse : HasRawResponse
+    public class ResolveCardBinResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

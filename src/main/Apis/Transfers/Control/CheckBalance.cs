@@ -16,7 +16,7 @@ namespace PayStack.Net
         }
     }
 
-    public class TransferCheckBalanceResponse : HasRawResponse
+    public class TransferCheckBalanceResponse : HasRawResponse, IApiResponse
     {
 
         [JsonProperty("status")]

@@ -17,7 +17,7 @@ namespace PayStack.Net
 
     }
 
-    public class CheckAuthorizationResponse : HasRawResponse
+    public class CheckAuthorizationResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

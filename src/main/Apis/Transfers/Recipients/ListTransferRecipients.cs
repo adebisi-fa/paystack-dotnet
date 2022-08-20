@@ -21,7 +21,7 @@ namespace PayStack.Net
         public int PageCount { get; set; }
     }
 
-    public class ListTransferRecipientsResponse : HasRawResponse
+    public class ListTransferRecipientsResponse : HasRawResponse, IApiResponse
     {
 
         [JsonProperty("status")]

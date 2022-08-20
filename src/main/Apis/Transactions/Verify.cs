@@ -151,7 +151,7 @@ namespace PayStack.Net
         }
     }
 
-    public class TransactionVerifyResponse : HasRawResponse
+    public class TransactionVerifyResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

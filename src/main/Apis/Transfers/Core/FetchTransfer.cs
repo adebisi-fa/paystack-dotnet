@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace PayStack.Net
 {
-    public class FetchTransferResponse : HasRawResponse
+    public class FetchTransferResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

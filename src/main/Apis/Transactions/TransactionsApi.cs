@@ -11,8 +11,8 @@ namespace PayStack.Net
             _api = api;
         }
 
-        public TransactionInitializeResponse Initialize(string email, int amount, string reference = null, bool makeReferenceUnique = false, string currency = "NGN")
-            => Initialize(new TransactionInitializeRequest { Reference = reference, Email = email, AmountInKobo = amount, Currency = currency }, makeReferenceUnique);
+        public TransactionInitializeResponse Initialize(string email, int amount, string reference = null, bool makeReferenceUnique = false, string currency = "NGN", string splitCode = null)
+            => Initialize(new TransactionInitializeRequest { Reference = reference, Email = email, AmountInKobo = amount, Currency = currency, SplitCode = splitCode }, makeReferenceUnique);
 
         public TransactionInitializeResponse Initialize(TransactionInitializeRequest request, bool makeReferenceUnique = false)
         {
@@ -94,5 +94,19 @@ namespace PayStack.Net
             _api.Post<CheckAuthorizationResponse, CheckAuthorizationRequest>(
                 "transaction/check_authorization", request
             );
+
+        public TransactionPartialDebitResponse PartialDebit(TransactionPartialDebitRequest request) =>
+            _api.Post<TransactionPartialDebitResponse, TransactionPartialDebitRequest>(
+                "transaction/partial_debit", request
+            );
+
+        public TransactionPartialDebitResponse PartialDebit(string authorizationCode, string currency, string amount, string email) =>
+            PartialDebit(new TransactionPartialDebitRequest
+            {
+                AuthorizationCode = authorizationCode,
+                Amount = amount,
+                Currency = currency,
+                Email = email
+            });
     }
 }

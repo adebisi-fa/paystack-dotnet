@@ -48,11 +48,13 @@ namespace PayStack.Net
 
     public class TransactionTotalsRequest
     {
+        public int PerPage { get; set; } = 50;
+        public int Page { get; set; } = 1;
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
     }
 
-    public class TransactionTotalsResponse : HasRawResponse
+    public class TransactionTotalsResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

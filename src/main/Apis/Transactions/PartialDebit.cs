@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace PayStack.Net
 {
-    public class Charge
+    public class TransactionPartialDebit
     {
         public class Authorization
         {
@@ -43,6 +43,9 @@ namespace PayStack.Net
 
             [JsonProperty("signature")]
             public string Signature { get; set; }
+
+            [JsonProperty("account_name")]
+            public string AccountName { get; set; }
         }
 
         public class Customer
@@ -52,10 +55,10 @@ namespace PayStack.Net
             public int Id { get; set; }
 
             [JsonProperty("first_name")]
-            public object FirstName { get; set; }
+            public string FirstName { get; set; }
 
             [JsonProperty("last_name")]
-            public object LastName { get; set; }
+            public string LastName { get; set; }
 
             [JsonProperty("email")]
             public string Email { get; set; }
@@ -64,7 +67,7 @@ namespace PayStack.Net
             public string CustomerCode { get; set; }
 
             [JsonProperty("phone")]
-            public object Phone { get; set; }
+            public string Phone { get; set; }
 
             [JsonProperty("metadata")]
             public object Metadata { get; set; }
@@ -88,9 +91,6 @@ namespace PayStack.Net
             [JsonProperty("status")]
             public string Status { get; set; }
 
-            [JsonProperty("url")]
-            public string Url { get; set; }
-
             [JsonProperty("reference")]
             public string Reference { get; set; }
 
@@ -98,16 +98,13 @@ namespace PayStack.Net
             public string Domain { get; set; }
 
             [JsonProperty("metadata")]
-            public Metadata Metadata { get; set; }
+            public string Metadata { get; set; }
 
             [JsonProperty("gateway_response")]
             public string GatewayResponse { get; set; }
 
             [JsonProperty("message")]
             public string Message { get; set; }
-
-            [JsonProperty("display_text")]
-            public string DisplayText { get; set; }
 
             [JsonProperty("channel")]
             public string Channel { get; set; }
@@ -116,7 +113,7 @@ namespace PayStack.Net
             public string IpAddress { get; set; }
 
             [JsonProperty("log")]
-            public object Log { get; set; }
+            public dynamic Log { get; set; }
 
             [JsonProperty("fees")]
             public int Fees { get; set; }
@@ -128,92 +125,34 @@ namespace PayStack.Net
             public Customer Customer { get; set; }
 
             [JsonProperty("plan")]
-            public dynamic Plan { get; set; }
+            public int Plan { get; set; }
         }
+
     }
 
-    public class Bank
+    public class TransactionPartialDebitRequest
     {
-
-        [JsonProperty("code")]
-        public string Code { get; set; }
-
-        [JsonProperty("account_number")]
-        public string AccountNumber { get; set; }
-    }
-
-    public class ChargeRequest : RequestMetadataExtender
-    {
-        public string Reference { get; set; }
-
-        [JsonProperty("device_id")]
-        public string DeviceId { get; set; }
-    }
-
-    public class BankChargeRequest : ChargeRequest
-    {
-        [JsonProperty("email")]
-        public string Email { get; set; }
-
-        [JsonProperty("amount")]
-        public string Amount { get; set; }
-
-        [JsonProperty("bank")]
-        public Bank Bank { get; set; }
-
-        [JsonProperty("birthday")]
-        public string Birthday { get; set; }
-    }
-
-    public class Card
-    {
-
-        [JsonProperty("cvv")]
-        public string Cvv { get; set; }
-
-        [JsonProperty("number")]
-        public string Number { get; set; }
-
-        [JsonProperty("expiry_month")]
-        public string ExpiryMonth { get; set; }
-
-        [JsonProperty("expiry_year")]
-        public string ExpiryYear { get; set; }
-    }
-
-    public class CardChargeRequest : ChargeRequest
-    {
-
-        [JsonProperty("email")]
-        public string Email { get; set; }
-
-        [JsonProperty("amount")]
-        public string Amount { get; set; }
-
-        [JsonProperty("card")]
-        public Card Card { get; set; }
-
-        [JsonProperty("pin")]
-        public string Pin { get; set; }
-    }
-
-    public class AuthorizationCodeChargeRequest : ChargeRequest
-    {
-
-        [JsonProperty("email")]
-        public string Email { get; set; }
-
-        [JsonProperty("amount")]
-        public string Amount { get; set; }
 
         [JsonProperty("authorization_code")]
         public string AuthorizationCode { get; set; }
 
-        [JsonProperty("pin")]
-        public string Pin { get; set; }
+        [JsonProperty("currency")]
+        public string Currency { get; set; }
+
+        [JsonProperty("amount")]
+        public string Amount { get; set; }
+
+        [JsonProperty("email")]
+        public string Email { get; set; }
+
+        [JsonProperty("reference")]
+        public string Reference { get; set; }
+
+        [JsonProperty("at_least")]
+        public string AtLeast { get; set; }
     }
 
-    public class ChargeResponse : HasRawResponse, IApiResponse
+    public class TransactionPartialDebitResponse : HasRawResponse, IApiResponse
     {
 
         [JsonProperty("status")]
@@ -223,6 +162,7 @@ namespace PayStack.Net
         public string Message { get; set; }
 
         [JsonProperty("data")]
-        public Charge.Data Data { get; set; }
+        public TransactionPartialDebit.Data Data { get; set; }
     }
+
 }

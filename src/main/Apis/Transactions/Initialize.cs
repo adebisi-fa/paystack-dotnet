@@ -26,6 +26,14 @@ namespace PayStack.Net
         public string Currency { get; set; } = "NGN";
 
         public string Bearer { get; set; }
+
+        [JsonProperty("invoice_limit")]
+        public int? InvoiceLimit { get; set; }
+
+        public string[] Channels { get; set; }
+
+        [JsonProperty("split_code")]
+        public string SplitCode { get; set; }
     }
 
     public static class PayStackChargesBearer
@@ -49,7 +57,7 @@ namespace PayStack.Net
         }
     }
 
-    public class TransactionInitializeResponse : HasRawResponse
+    public class TransactionInitializeResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

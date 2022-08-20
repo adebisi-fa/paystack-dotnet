@@ -17,7 +17,7 @@ namespace PayStack.Net
         public string Email { get; set; }
     }
 
-    public class ReAuthorizationResponse : HasRawResponse
+    public class ReAuthorizationResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

@@ -71,7 +71,7 @@ namespace PayStack.Net
             return requestBody;
         }
 
-        internal TR Post<TR, T>(string relativeUrl, T request)
+        public TR Post<TR, T>(string relativeUrl, T request) where TR : IApiResponse
         {
             var rawJson = _client.PostAsync(
                     relativeUrl,
@@ -81,7 +81,7 @@ namespace PayStack.Net
             return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
-        private static TR ParseAndResolveMetadata<TR>(ref string rawJson)
+        private static TR ParseAndResolveMetadata<TR>(ref string rawJson) where TR : IApiResponse
         {
             var jo = JObject.Parse(rawJson);
             var data = jo["data"];
@@ -101,7 +101,7 @@ namespace PayStack.Net
             return response;
         }
 
-        internal TR Put<TR, T>(string relativeUrl, T request)
+        public TR Put<TR, T>(string relativeUrl, T request) where TR : IApiResponse
         {
             var rawJson = _client.PutAsync(
                     relativeUrl,
@@ -111,8 +111,8 @@ namespace PayStack.Net
             return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
-        internal TR Get<TR, T>(string relativeUrl, T request)
-            where TR : class
+        public TR Get<TR, T>(string relativeUrl, T request)
+            where TR : class, IApiResponse
         {
             var preparable = request as IPreparable;
 
@@ -127,7 +127,7 @@ namespace PayStack.Net
             return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
-        internal TR Get<TR>(string relativeUrl)
+        public TR Get<TR>(string relativeUrl) where TR : IApiResponse
         {
             var rawJson = _client.GetAsync(relativeUrl).Result.Content.ReadAsStringAsync().Result;
             return ParseAndResolveMetadata<TR>(ref rawJson);

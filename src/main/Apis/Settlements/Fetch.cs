@@ -68,7 +68,7 @@ namespace PayStack.Net
         public string SubAccount { get; set; } = "none";
     }
 
-    public class SettlementsFetchResponse : HasRawResponse
+    public class SettlementsFetchResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

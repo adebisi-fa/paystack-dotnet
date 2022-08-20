@@ -66,7 +66,7 @@ namespace PayStack.Net
         }
     }
 
-    public class SubAccountCreateResponse : HasRawResponse
+    public class SubAccountCreateResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

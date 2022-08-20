@@ -51,7 +51,7 @@ namespace PayStack.Net
 
         public void FinalizeTransfer(string transferCode, string otp)
         {
-            _api.Post<dynamic, dynamic>("transfer/finalize_transfer", new
+            _api.Post<ApiResponse<dynamic>, dynamic>("transfer/finalize_transfer", new
             {
                 transfer_code = transferCode,
                 otp = otp

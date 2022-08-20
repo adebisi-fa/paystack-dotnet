@@ -65,7 +65,7 @@ namespace PayStack.Net
         }
     }
 
-    public class ChargeTokenizeResponse : HasRawResponse
+    public class ChargeTokenizeResponse : HasRawResponse, IApiResponse
     {
 
         [JsonProperty("status")]

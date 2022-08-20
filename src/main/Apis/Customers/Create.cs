@@ -43,7 +43,7 @@ namespace PayStack.Net
         public string Phone { get; set; }
     }
 
-    public class CustomerCreateResponse : HasRawResponse
+    public class CustomerCreateResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

@@ -48,7 +48,7 @@ namespace PayStack.Net
         }
     }
 
-    public class TransactionTimelineResponse : HasRawResponse
+    public class TransactionTimelineResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }

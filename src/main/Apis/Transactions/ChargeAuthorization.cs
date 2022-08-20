@@ -22,9 +22,11 @@ namespace PayStack.Net
         public int TransactionCharge { get; set; }
 
         public string Bearer { get; set; }
+
+        public bool Queue { get; set; }
     }
 
-    public class ChargeAuthorizationResponse : HasRawResponse
+    public class ChargeAuthorizationResponse : HasRawResponse, IApiResponse
     {
         [JsonProperty("status")]
         public bool Status { get; set; }
