@@ -74,7 +74,7 @@ namespace PayStack.Net
         public TR Post<TR, T>(string relativeUrl, T request) where TR : IApiResponse
         {
             var rawJson = _client.PostAsync(
-                    relativeUrl,
+                    relativeUrl.TrimStart('/'),
                     new StringContent(PrepareRequest(request))
                 ).Result.Content.ReadAsStringAsync().Result;
 
@@ -104,7 +104,7 @@ namespace PayStack.Net
         public TR Put<TR, T>(string relativeUrl, T request) where TR : IApiResponse
         {
             var rawJson = _client.PutAsync(
-                    relativeUrl,
+                    relativeUrl.TrimStart('/'),
                     new StringContent(PrepareRequest(request))
                 ).Result.Content.ReadAsStringAsync().Result;
 
@@ -123,13 +123,13 @@ namespace PayStack.Net
             if (preparable != null)
                 preparable.Prepare();
 
-            var rawJson = _client.GetAsync(relativeUrl + queryString).Result.Content.ReadAsStringAsync().Result;
+            var rawJson = _client.GetAsync(relativeUrl.TrimStart('/') + queryString).Result.Content.ReadAsStringAsync().Result;
             return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
         public TR Get<TR>(string relativeUrl) where TR : IApiResponse
         {
-            var rawJson = _client.GetAsync(relativeUrl).Result.Content.ReadAsStringAsync().Result;
+            var rawJson = _client.GetAsync(relativeUrl.TrimStart('/')).Result.Content.ReadAsStringAsync().Result;
             return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
