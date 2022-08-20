@@ -1,8 +1,8 @@
 # PayStack API for .Net
 This library makes it easy to consume the [Payment API](http://developers.paystack.co/docs) from .Net projects.
 
-## What's new in 1.0.0 !
-Simply, 100% API coverage!  
+## What's new in 1.0.x !
+100% API coverage, simply!  
 
 With this update, all Paystack APIs are now available via the **Type-less** API, exposed directly on `PayStackApi`. This makes it possible to call **new** or **existing** endpoints previously not suppported via this library's Typed API.
 

@@ -4,7 +4,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Paystack.Net</PackageId>
     <Title>PayStack API for .Net</Title>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Adebisi Foluso A.</Authors>
     <Company />
     <Product>PayStack.Net</Product>
@@ -16,6 +16,9 @@
     <PackageIcon>paystack-logo.png</PackageIcon>
      <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
+    -- v1.0.1 --
+    * Fix: Clean-up URL for Type-less API calls.
+
     -- v1.0.0 --
     * Feat: 100% API coverage (via the Type-less API)
     * Bug fix: Closes #21 (Thanks @thrizy, sorry it took so long!)
