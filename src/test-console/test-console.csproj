@@ -16,7 +16,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp6</TargetFramework>
     <RootNamespace>test_console</RootNamespace>
   </PropertyGroup>
 
