@@ -102,7 +102,7 @@ namespace PayStack.Net
         public class Datum
         {
             [JsonProperty("id")]
-            public int Id { get; set; }
+            public long Id { get; set; }
 
             [JsonProperty("domain")]
             public string Domain { get; set; }
