@@ -30,6 +30,9 @@ namespace PayStack.Net
             [JsonProperty("is_deleted")]
             public object IsDeleted { get; set; }
 
+            [JsonProperty("type")]
+            public string Type { get; set; }
+
             [JsonProperty("id")]
             public int Id { get; set; }
 
