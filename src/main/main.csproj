@@ -4,7 +4,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Paystack.Net</PackageId>
     <Title>PayStack API for .Net</Title>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>Adebisi Foluso A.</Authors>
     <Company />
     <Product>PayStack.Net</Product>
@@ -16,6 +16,9 @@
     <PackageIcon>paystack-logo.png</PackageIcon>
      <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
+    -- v1.1.1 --
+    * Fix: Add `type` property to the ListBank API's response. (Thanks @@lexTutor!)
+
     -- v1.1.0 --
     * [Breaking] Update transaction ID from Int32 (int) to Int64 (long). (Thanks @teghoz!)
 
