@@ -9,13 +9,11 @@ namespace test_console
 {
     public class DtoUpdateCustomer
     {
-        [JsonProperty("customer_code")]
-        public string CustomerCode { get; set; }
+        [JsonProperty("customer_code")] public string CustomerCode { get; set; }
 
         public string Domain { get; set; }
 
-        [JsonProperty("integration")]
-        public int Integration { get; set; }
+        [JsonProperty("integration")] public int Integration { get; set; }
     }
 
     internal class Program
@@ -88,7 +86,8 @@ namespace test_console
             // TransactionTotals_Setup();
             // TransactionTimeline_Setup();
             // TransactionFetch_Setup();
-            // TransactionList_Setup();
+            //TransactionList_Setup();
+            //TransactionList_Filtered_Setup();
             // InitializeRequest_Setup();
             // VerifyPaymentReference();
         }
@@ -204,6 +203,18 @@ namespace test_console
         private static void TransactionList_Setup() =>
             _api.Transactions.List().Print();
 
+        private static void TransactionList_Filtered_Setup()
+        {
+            var request = new TransactionListRequest
+            {
+                PerPage = 10,
+                Page = 1,
+                From = new DateTime(2023, 1, 1),
+                To = new DateTime(2023, 12, 31),
+            };
+            _api.Transactions.List(request).Print();
+        }
+
 
         private static void InitializeRequest_Setup()
         {
@@ -234,6 +245,7 @@ namespace test_console
                 var message = response.Message;
                 return;
             }
+
             Console.WriteLine("Response");
             response.Print();
         }

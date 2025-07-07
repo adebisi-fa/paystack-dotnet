@@ -162,7 +162,7 @@ namespace PayStack.Net
             public int Total { get; set; }
 
             [JsonProperty("total_volume")]
-            public int TotalVolume { get; set; }
+            public long TotalVolume { get; set; }
 
             [JsonProperty("perPage")]
             public string PerPage { get; set; }
@@ -177,18 +177,18 @@ namespace PayStack.Net
 
     public class TransactionListRequest : IPreparable
     {
-        public int PerPage { get; set; } = 50;
-        public int Page { get; set; } = 1;
-        public int Customer { get; set; }
-        public string Status { get; set; }
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
-        public int Amount { get; set; }
+        public int? PerPage { get; set; } = 50;
+        public int? Page { get; set; } = 1;
+        public int? Customer { get; set; }
+        public string? Status { get; set; }
+        public DateTime? From { get; set; }
+        public DateTime? To { get; set; }
+        public int? Amount { get; set; }
 
         public void Prepare()
         {
-            From = From.Date; // Start from 12:00 for this date
-            To = To.Date; // Stops at 12:00 for this date
+            From = From?.Date; // Start from 12:00 for this date
+            To = To?.Date; // Stops at 12:00 for this date
         }
     }
 
