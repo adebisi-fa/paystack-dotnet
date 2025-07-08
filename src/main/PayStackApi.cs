@@ -122,7 +122,7 @@ namespace PayStack.Net
                 preparable.Prepare();
             
             if (request != null)
-                queryString = $"?{preparable.ToQueryString()}";
+                queryString = $"?{request.ToQueryString()}";
             
             var rawJson = _client.GetAsync(relativeUrl.TrimStart('/') + queryString).Result.Content.ReadAsStringAsync().Result;
             return ParseAndResolveMetadata<TR>(ref rawJson);
