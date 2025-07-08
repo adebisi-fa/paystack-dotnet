@@ -180,7 +180,7 @@ namespace PayStack.Net
         public int? PerPage { get; set; } = 50;
         public int? Page { get; set; } = 1;
         public int? Customer { get; set; }
-        public string? Status { get; set; }
+        public string Status { get; set; }
         public DateTime? From { get; set; }
         public DateTime? To { get; set; }
         public int? Amount { get; set; }
