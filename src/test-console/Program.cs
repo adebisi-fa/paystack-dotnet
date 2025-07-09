@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using Newtonsoft.Json;
 using PayStack.Net;
@@ -88,6 +89,8 @@ namespace test_console
             // TransactionFetch_Setup();
             //TransactionList_Setup();
             //TransactionList_Filtered_Setup();
+            //TransactionList_Generic_Filtered_Setup();
+            //TransactionList_Generic_With_FullResponse_Filtered_Setup();
             // InitializeRequest_Setup();
             // VerifyPaymentReference();
         }
@@ -215,6 +218,32 @@ namespace test_console
             _api.Transactions.List(request).Print();
         }
 
+        private static void TransactionList_Generic_Filtered_Setup()
+        {
+            var request = new TransactionListRequest
+            {
+                PerPage = 10,
+                Page = 1,
+                From = new DateTime(2023, 1, 1),
+                To = new DateTime(2023, 12, 31),
+            };
+
+            _api.Transactions.List<TransactionListResponseData>(request).Print();
+        }
+
+        private static void TransactionList_Generic_With_FullResponse_Filtered_Setup()
+        {
+            var request = new TransactionListRequest
+            {
+                PerPage = 10,
+                Page = 1,
+                From = new DateTime(2023, 1, 1),
+                To = new DateTime(2023, 12, 31),
+            };
+
+            var test = _api.Transactions.ListAs<CustomTransactionListResponse>(request);
+            _api.Transactions.ListAs<CustomTransactionListResponse>(request).Print();
+        }
 
         private static void InitializeRequest_Setup()
         {
@@ -249,6 +278,58 @@ namespace test_console
             Console.WriteLine("Response");
             response.Print();
         }
+    }
+
+    public class CustomTransactionListResponse : IApiResponse
+    {
+        [JsonProperty("status")] public bool Status { get; set; }
+
+        [JsonProperty("message")] public string Message { get; set; }
+
+        [JsonProperty("data")] public IList<TransactionListResponseData> Data { get; set; }
+
+        [JsonProperty("meta")] public TransactionList.Meta Meta { get; set; }
+    }
+
+    public class TransactionListResponseData
+    {
+        [JsonProperty("id")] public long Id { get; set; }
+
+        [JsonProperty("domain")] public string Domain { get; set; }
+
+        [JsonProperty("status")] public string Status { get; set; }
+
+        [JsonProperty("reference")] public string Reference { get; set; }
+
+        [JsonProperty("amount")] public int Amount { get; set; }
+
+        [JsonProperty("gateway_response")] public string GatewayResponse { get; set; }
+
+        [JsonProperty("paid_at")] public DateTime? PaidAt { get; set; }
+
+        [JsonProperty("created_at")] public DateTime CreatedAt { get; set; }
+
+        [JsonProperty("channel")] public string Channel { get; set; }
+
+        [JsonProperty("currency")] public string Currency { get; set; }
+
+        [JsonProperty("ip_address")] public string IpAddress { get; set; }
+
+        [JsonProperty("metadata")] public Metadata Metadata { get; set; }
+
+        [JsonProperty("log")] public TransactionList.Log Log { get; set; }
+
+        [JsonProperty("fees")] public string Fees { get; set; }
+
+        [JsonProperty("paidAt")] public DateTime? PaidAtRedundant { get; set; }
+
+        [JsonProperty("createdAt")] public DateTime CreatedAtRedundant { get; set; }
+
+        [JsonProperty("authorization")] public TransactionList.Authorization Authorization { get; set; }
+
+        [JsonProperty("customer")] public TransactionList.Customer Customer { get; set; }
+
+        [JsonProperty("fees_split")] public TransactionList.FeesSplit FeesSplit { get; set; }
     }
 
     public static class Extensions
