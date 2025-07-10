@@ -4,7 +4,6 @@ namespace PayStack.Net
 {
     public class CheckAuthorizationRequest
     {
-
         [JsonProperty("authorization_code")]
         public string AuthorizationCode { get; set; }
 
@@ -14,7 +13,6 @@ namespace PayStack.Net
         public int AmountInKobo { get; set; }
 
         public string Email { get; set; }
-
     }
 
     public class CheckAuthorizationResponse : HasRawResponse, IApiResponse

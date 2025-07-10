@@ -23,7 +23,6 @@ namespace PayStack.Net
 
     public class ListTransferRecipientsResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 
@@ -36,5 +35,4 @@ namespace PayStack.Net
         [JsonProperty("meta")]
         public Meta Meta { get; set; }
     }
-
 }

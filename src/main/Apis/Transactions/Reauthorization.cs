@@ -29,7 +29,8 @@ namespace PayStack.Net
         public ReAuthorizationData Data { get; set; }
     }
 
-    public class ReAuthorizationData {
+    public class ReAuthorizationData
+    {
         [JsonProperty("reauthorization_url")]
         public string ReAuthorizationUrl { get; set; }
 

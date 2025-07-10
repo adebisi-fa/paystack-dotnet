@@ -8,7 +8,6 @@ namespace PayStack.Net
     {
         public class Details
         {
-
             [JsonProperty("account_number")]
             public string AccountNumber { get; set; }
 
@@ -24,7 +23,6 @@ namespace PayStack.Net
 
         public class Data
         {
-
             [JsonProperty("type")]
             public string Type { get; set; }
 
@@ -65,7 +63,6 @@ namespace PayStack.Net
 
     public class CreateTransferRecipientResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

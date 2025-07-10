@@ -11,8 +11,19 @@ namespace PayStack.Net
             _api = api;
         }
 
-        public SettlementsFetchResponse Fetch(DateTime? from = null, DateTime? to = null, string subaccount = "none") =>
-            _api.Get<SettlementsFetchResponse, SettlementsFetchRequest>("settlement",
-                new SettlementsFetchRequest {From = from, To = to, SubAccount = subaccount});
+        public SettlementsFetchResponse Fetch(
+            DateTime? from = null,
+            DateTime? to = null,
+            string subaccount = "none"
+        ) =>
+            _api.Get<SettlementsFetchResponse, SettlementsFetchRequest>(
+                "settlement",
+                new SettlementsFetchRequest
+                {
+                    From = from,
+                    To = to,
+                    SubAccount = subaccount,
+                }
+            );
     }
 }

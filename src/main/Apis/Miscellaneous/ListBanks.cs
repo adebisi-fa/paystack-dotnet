@@ -8,7 +8,6 @@ namespace PayStack.Net
     {
         public class Datum
         {
-
             [JsonProperty("name")]
             public string Name { get; set; }
 
@@ -46,7 +45,6 @@ namespace PayStack.Net
 
     public class ListBanksResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

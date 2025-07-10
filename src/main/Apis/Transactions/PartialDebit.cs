@@ -7,7 +7,6 @@ namespace PayStack.Net
     {
         public class Authorization
         {
-
             [JsonProperty("authorization_code")]
             public string AuthorizationCode { get; set; }
 
@@ -50,7 +49,6 @@ namespace PayStack.Net
 
         public class Customer
         {
-
             [JsonProperty("id")]
             public int Id { get; set; }
 
@@ -78,7 +76,6 @@ namespace PayStack.Net
 
         public class Data
         {
-
             [JsonProperty("amount")]
             public int Amount { get; set; }
 
@@ -127,12 +124,10 @@ namespace PayStack.Net
             [JsonProperty("plan")]
             public int Plan { get; set; }
         }
-
     }
 
     public class TransactionPartialDebitRequest
     {
-
         [JsonProperty("authorization_code")]
         public string AuthorizationCode { get; set; }
 
@@ -154,7 +149,6 @@ namespace PayStack.Net
 
     public class TransactionPartialDebitResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 
@@ -164,5 +158,4 @@ namespace PayStack.Net
         [JsonProperty("data")]
         public TransactionPartialDebit.Data Data { get; set; }
     }
-
 }

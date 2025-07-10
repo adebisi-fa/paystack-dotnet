@@ -2,9 +2,8 @@
 
 namespace PayStack.Net
 {
-    public class CustomerFetchResponse  : HasRawResponse, IApiResponse
+    public class CustomerFetchResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

@@ -24,7 +24,6 @@ namespace PayStack.Net
 
         public class Meta
         {
-
             [JsonProperty("calls_this_month")]
             public int CallsThisMonth { get; set; }
 
@@ -35,7 +34,6 @@ namespace PayStack.Net
 
     public class ResolveBVNResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

@@ -15,7 +15,7 @@ namespace PayStack.Net
         public string Payment_Page { get; set; }
 
         public int? Customer { get; set; }
-        
+
         public string Currency { get; set; }
 
         public int? Settlement { get; set; }

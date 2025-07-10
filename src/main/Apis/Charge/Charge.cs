@@ -7,7 +7,6 @@ namespace PayStack.Net
     {
         public class Authorization
         {
-
             [JsonProperty("authorization_code")]
             public string AuthorizationCode { get; set; }
 
@@ -47,7 +46,6 @@ namespace PayStack.Net
 
         public class Customer
         {
-
             [JsonProperty("id")]
             public int Id { get; set; }
 
@@ -75,7 +73,6 @@ namespace PayStack.Net
 
         public class Data
         {
-
             [JsonProperty("amount")]
             public int Amount { get; set; }
 
@@ -134,7 +131,6 @@ namespace PayStack.Net
 
     public class Bank
     {
-
         [JsonProperty("code")]
         public string Code { get; set; }
 
@@ -167,7 +163,6 @@ namespace PayStack.Net
 
     public class Card
     {
-
         [JsonProperty("cvv")]
         public string Cvv { get; set; }
 
@@ -183,7 +178,6 @@ namespace PayStack.Net
 
     public class CardChargeRequest : ChargeRequest
     {
-
         [JsonProperty("email")]
         public string Email { get; set; }
 
@@ -199,7 +193,6 @@ namespace PayStack.Net
 
     public class AuthorizationCodeChargeRequest : ChargeRequest
     {
-
         [JsonProperty("email")]
         public string Email { get; set; }
 
@@ -215,7 +208,6 @@ namespace PayStack.Net
 
     public class ChargeResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

@@ -4,8 +4,12 @@ namespace PayStack.Net
     {
         SubAccountCreateResponse Create(SubAccountCreateRequest request);
 
-        SubAccountCreateResponse Create(string businessName, string settlementBank, string accountNumber,
-            string percentageCharge);
+        SubAccountCreateResponse Create(
+            string businessName,
+            string settlementBank,
+            string accountNumber,
+            string percentageCharge
+        );
 
         SubAccountListResponse List(int perPage = 50, int page = 1);
         SubAccountFetchResponse Fetch(string idOrSlug);

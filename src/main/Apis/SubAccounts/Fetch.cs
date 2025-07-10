@@ -2,9 +2,7 @@
 
 namespace PayStack.Net
 {
-    public class SubAccountFetchData : SubAccountCreate.Data
-    {
-    }
+    public class SubAccountFetchData : SubAccountCreate.Data { }
 
     public class SubAccountFetchResponse : HasRawResponse, IApiResponse
     {

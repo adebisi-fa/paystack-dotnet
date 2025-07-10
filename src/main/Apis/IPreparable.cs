@@ -17,15 +17,19 @@ namespace PayStack.Net
             if (request == null)
                 return string.Empty;
 
-            return string.Join("&",
-                request.GetType()
+            return string.Join(
+                "&",
+                request
+                    .GetType()
                     .GetProperties()
                     .Select(p => new { p.Name, Value = p.GetValue(request, null) })
                     .Where(p => p.Value != null)
-                    .Select(p => $"{p.Name.ToCamelCase()}={HttpUtility.UrlEncode(GetQueryStringValue(p.Value))}")
+                    .Select(p =>
+                        $"{p.Name.ToCamelCase()}={HttpUtility.UrlEncode(GetQueryStringValue(p.Value))}"
+                    )
             );
         }
-        
+
         private static string ToCamelCase(this string str)
         {
             if (string.IsNullOrEmpty(str) || char.IsLower(str[0]))

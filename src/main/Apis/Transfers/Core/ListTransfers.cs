@@ -8,7 +8,6 @@ namespace PayStack.Net
     {
         public class Datum
         {
-
             [JsonProperty("integration")]
             public int Integration { get; set; }
 
@@ -54,7 +53,6 @@ namespace PayStack.Net
 
         public class Meta
         {
-
             [JsonProperty("total")]
             public int Total { get; set; }
 
@@ -74,7 +72,6 @@ namespace PayStack.Net
 
     public class ListTransfersResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

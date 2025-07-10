@@ -7,7 +7,6 @@ namespace PayStack.Net
     {
         public class Datum
         {
-
             [JsonProperty("currency")]
             public string Currency { get; set; }
 
@@ -18,7 +17,6 @@ namespace PayStack.Net
 
     public class TransferCheckBalanceResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

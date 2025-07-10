@@ -6,7 +6,6 @@ namespace PayStack.Net
     {
         public class Data
         {
-
             [JsonProperty("account_number")]
             public string AccountNumber { get; set; }
 
@@ -17,7 +16,6 @@ namespace PayStack.Net
 
     public class ResolveAccountNumberResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 
@@ -27,5 +25,4 @@ namespace PayStack.Net
         [JsonProperty("data")]
         public ResolveAcountNumber.Data Data { get; set; }
     }
-
 }

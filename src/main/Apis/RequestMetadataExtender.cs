@@ -49,7 +49,7 @@ namespace PayStack.Net
 
         public string Value { get; set; }
 
-        public static CustomField From(string displayName, string variableName, string value)
-            => new CustomField(displayName, variableName, value);
+        public static CustomField From(string displayName, string variableName, string value) =>
+            new CustomField(displayName, variableName, value);
     }
 }

@@ -7,7 +7,6 @@ namespace PayStack.Net
     {
         public class Customer
         {
-
             [JsonProperty("id")]
             public int Id { get; set; }
 
@@ -26,7 +25,6 @@ namespace PayStack.Net
 
         public class Data
         {
-
             [JsonProperty("authorization_code")]
             public string AuthorizationCode { get; set; }
 
@@ -67,7 +65,6 @@ namespace PayStack.Net
 
     public class ChargeTokenizeResponse : HasRawResponse, IApiResponse
     {
-
         [JsonProperty("status")]
         public bool Status { get; set; }
 

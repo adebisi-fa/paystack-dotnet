@@ -25,8 +25,13 @@ namespace PayStack.Net
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             _client = new HttpClient { BaseAddress = new Uri("https://api.paystack.co/") };
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", secretKey);
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Bearer",
+                secretKey
+            );
+            _client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json")
+            );
 
             Transactions = new TransactionsApi(this);
             Customers = new CustomersApi(this);
@@ -37,11 +42,12 @@ namespace PayStack.Net
             Charge = new ChargeApi(this);
         }
 
-        public static JsonSerializerSettings SerializerSettings { get; } = new JsonSerializerSettings
-        {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate
-        };
+        public static JsonSerializerSettings SerializerSettings { get; } =
+            new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
+            };
 
         public ISubAccountApi SubAccounts { get; }
 
@@ -57,9 +63,9 @@ namespace PayStack.Net
 
         public IChargeApi Charge { get; }
 
-
         [Obsolete("Use PayStack.Net.Miscellaneous.ResolveCardBin(cardBin) instead.")]
-        public ResolveCardBinResponse ResolveCardBin(string cardBin) => Miscellaneous.ResolveCardBin(cardBin);
+        public ResolveCardBinResponse ResolveCardBin(string cardBin) =>
+            Miscellaneous.ResolveCardBin(cardBin);
 
         #region Utility Methods
 
@@ -67,28 +73,36 @@ namespace PayStack.Net
         {
             (request as IPreparable)?.Prepare();
 
-            var requestBody = JsonConvert.SerializeObject(request, Formatting.Indented, SerializerSettings);
+            var requestBody = JsonConvert.SerializeObject(
+                request,
+                Formatting.Indented,
+                SerializerSettings
+            );
             return requestBody;
         }
 
-        public TR Post<TR, T>(string relativeUrl, T request) where TR : IApiResponse
+        public TR Post<TR, T>(string relativeUrl, T request)
+            where TR : IApiResponse
         {
-            var rawJson = _client.PostAsync(
-                    relativeUrl.TrimStart('/'),
-                    new StringContent(PrepareRequest(request))
-                ).Result.Content.ReadAsStringAsync().Result;
+            var rawJson = _client
+                .PostAsync(relativeUrl.TrimStart('/'), new StringContent(PrepareRequest(request)))
+                .Result.Content.ReadAsStringAsync()
+                .Result;
 
             return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
-        private static TR ParseAndResolveMetadata<TR>(ref string rawJson) where TR : IApiResponse
+        private static TR ParseAndResolveMetadata<TR>(ref string rawJson)
+            where TR : IApiResponse
         {
             var jo = JObject.Parse(rawJson);
             var data = jo["data"];
             if (data != null && !(data is JArray) && data["metadata"] != null)
             {
                 var metadata = data["metadata"];
-                jo["data"]["metadata"] = JsonConvert.DeserializeObject<JObject>(metadata.ToString());
+                jo["data"]["metadata"] = JsonConvert.DeserializeObject<JObject>(
+                    metadata.ToString()
+                );
             }
 
             rawJson = jo.ToString();
@@ -101,12 +115,13 @@ namespace PayStack.Net
             return response;
         }
 
-        public TR Put<TR, T>(string relativeUrl, T request) where TR : IApiResponse
+        public TR Put<TR, T>(string relativeUrl, T request)
+            where TR : IApiResponse
         {
-            var rawJson = _client.PutAsync(
-                    relativeUrl.TrimStart('/'),
-                    new StringContent(PrepareRequest(request))
-                ).Result.Content.ReadAsStringAsync().Result;
+            var rawJson = _client
+                .PutAsync(relativeUrl.TrimStart('/'), new StringContent(PrepareRequest(request)))
+                .Result.Content.ReadAsStringAsync()
+                .Result;
 
             return ParseAndResolveMetadata<TR>(ref rawJson);
         }
@@ -117,20 +132,29 @@ namespace PayStack.Net
             var preparable = request as IPreparable;
 
             var queryString = "";
-            
+
             if (preparable != null)
                 preparable.Prepare();
-            
+
             if (request != null)
                 queryString = $"?{request.ToQueryString()}";
-            
-            var rawJson = _client.GetAsync(relativeUrl.TrimStart('/') + queryString).Result.Content.ReadAsStringAsync().Result;
+
+            var rawJson = _client
+                .GetAsync(relativeUrl.TrimStart('/') + queryString)
+                .Result.Content.ReadAsStringAsync()
+                .Result;
+
             return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 
-        public TR Get<TR>(string relativeUrl) where TR : IApiResponse
+        public TR Get<TR>(string relativeUrl)
+            where TR : IApiResponse
         {
-            var rawJson = _client.GetAsync(relativeUrl.TrimStart('/')).Result.Content.ReadAsStringAsync().Result;
+            var rawJson = _client
+                .GetAsync(relativeUrl.TrimStart('/'))
+                .Result.Content.ReadAsStringAsync()
+                .Result;
+
             return ParseAndResolveMetadata<TR>(ref rawJson);
         }
 

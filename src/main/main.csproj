@@ -14,7 +14,7 @@
     <PackageProjectUrl>https://github.com/adebisi-fa/paystack-dotnet</PackageProjectUrl>
     <PackageIconUrl>https://cdn-images-1.medium.com/fit/c/100/100/1*We_5HSqJAUVETQ7xgcJNQQ.png</PackageIconUrl>
     <PackageIcon>paystack-logo.png</PackageIcon>
-     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
     -- v1.1.2 --
     * Fix: HTTP GET RequestDTOs' serialization to query string. (Gracias @teghoz!)
