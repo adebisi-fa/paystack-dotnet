@@ -1,19 +1,25 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using PayStack.Net;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace test_console
 {
     public class DtoUpdateCustomer
     {
-        [JsonProperty("customer_code")] public string CustomerCode { get; set; }
+        [JsonProperty("customer_code")]
+        public string CustomerCode { get; set; }
 
         public string Domain { get; set; }
 
-        [JsonProperty("integration")] public int Integration { get; set; }
+        [JsonProperty("integration")]
+        public int Integration { get; set; }
     }
 
     internal class Program
@@ -47,9 +53,9 @@ namespace test_console
             //
 
             // 1.
-            // ListBanks();
+            ListBanksWithCustomResponseTypes();
 
-            // 2. 
+            // 2.
             // var response = _api.Miscellaneous.ResolveAccountNumber("0043216012", "058");
             //response.Print();
 
@@ -94,12 +100,15 @@ namespace test_console
 
         private static void TypelessAPISample()
         {
-            var result = _api.Put<ApiResponse<DtoUpdateCustomer>, dynamic>("customer/CUS_y29yudq6e43rh3w", new
-            {
-                first_name = "Firstname",
-                last_name = "LASTNAME",
-                phone = "080000000"
-            });
+            var result = _api.Put<ApiResponse<DtoUpdateCustomer>, dynamic>(
+                "customer/CUS_y29yudq6e43rh3w",
+                new
+                {
+                    first_name = "Firstname",
+                    last_name = "LASTNAME",
+                    phone = "080000000",
+                }
+            );
             if (result.Status)
                 Console.WriteLine(result.Data.CustomerCode);
             else
@@ -108,7 +117,11 @@ namespace test_console
 
         private static void AccessRawJsonSentFromServer()
         {
-            var response = _api.Transfers.Recipients.Create("ADEBISI Foluso A.", "0043216013", "058");
+            var response = _api.Transfers.Recipients.Create(
+                "ADEBISI Foluso A.",
+                "0043216013",
+                "058"
+            );
             if (response is IHasRawResponse rawResponse)
             {
                 Console.WriteLine("Raw JSON from Server");
@@ -123,15 +136,69 @@ namespace test_console
 
         private static void CreateTransferRecipient()
         {
-            var response = _api.Transfers.Recipients.Create("ADEBISI Foluso A.", "0043216012", "058");
+            var response = _api.Transfers.Recipients.Create(
+                "ADEBISI Foluso A.",
+                "0043216012",
+                "058"
+            );
             response.Print();
         }
 
-        private static void ListBanks()
+        class Bank
         {
+            public string name { get; set; }
+
+            // will match json 'code' property, not case sensitive.
+            public string coDe { get; set; }
+
+
+            [JsonProperty("slug")]
+            public string BankSlug { get; set; }
+        }
+
+        class CustomListBankResponse
+        {
+            public bool Status { get; set; }
+            public string message { get; set; } // Not case sensitive
+            public IList<Bank> data { get; set; }
+        }
+
+        private static void ListBanksWithCustomResponseTypes()
+        {
+            // METHOD 1: With Typed Response
+            Console.WriteLine("Method 1:");
             var response = _api.Miscellaneous.ListBanks();
-            foreach (var b in response.Data)
+            foreach (var b in response.Data.Take(2)) // First two(2) banks
                 Console.WriteLine($"[{b.Code}] {b.Name} {b.Slug}");
+            Console.WriteLine("Status: {0}", response.Status); // should be "True"
+            Console.WriteLine();
+
+            // METHOD 2: With Custom Types or dynamic
+
+            // Example 1: Parse the response's data to a custom list of Banks
+            Console.WriteLine("Method 2.1: Response's data parsing");
+            var banks = response.DataAs<IList<Bank>>();
+            foreach (var b in banks.Take(2)) // First two(2) banks.
+                Console.WriteLine($"[{b.coDe}] {b.name} {b.BankSlug}");
+            Console.WriteLine();
+
+            // Example 2: Parse the full response to a custom type
+            Console.WriteLine("Method 2.2: Full response parsing via Custom Type.");
+            var customResponse = response.As<CustomListBankResponse>();
+            foreach (var b in customResponse.data.Take(2)) // First two(2) banks.
+                Console.WriteLine($"[{b.coDe}] {b.name} {b.BankSlug}");
+            Console.WriteLine("Status: {0}", customResponse.Status); // should be "True"
+            Console.WriteLine();
+
+            // Example 3: Parse the full response json to a dynamic
+            Console.WriteLine("Method 2.3: Full response parsing via dynamic");
+            var customResponseDynamic = response.As<dynamic>();
+            var firstTwoBanks = ((IEnumerable<dynamic>)customResponseDynamic.data).Take(2); // First two(2) banks.
+            foreach (var b in firstTwoBanks)
+                // For dynamic, properties (including nested) must be used as it appeared in the raw json
+                Console.WriteLine($"[{b.code}] {b.name} {b.slug}");
+            Console.WriteLine("Status: {0}", customResponseDynamic.status); // should be "True"
+            Console.WriteLine();
         }
 
         private static void SettlementsFetch() => _api.Settlements.Fetch().Print();
@@ -145,7 +212,8 @@ namespace test_console
         {
             var suba = _api.SubAccounts.Fetch("ACCT_v1wico0y3742ecn");
 
-            if (!suba.Status) return;
+            if (!suba.Status)
+                return;
 
             // Populate sub account request from fetched object
             var request = new SubAccountUpdateRequest().PopulateWith(suba);
@@ -156,7 +224,9 @@ namespace test_console
             // Call the API
             var response = _api.SubAccounts.Update("ACCT_v1wico0y3742ecn", request);
 
-            Console.WriteLine(response.Status ? "Subaccount successfully updated." : response.Message);
+            Console.WriteLine(
+                response.Status ? "Subaccount successfully updated." : response.Message
+            );
         }
 
         private static void ListSubAccounts()
@@ -171,37 +241,34 @@ namespace test_console
         }
 
         private static void CustomerUpdate() =>
-            _api.Customers.Update("CUS_bq58eabsts5xvhc", "BILL", "Gate Williams III", "08068287222").Print();
+            _api
+                .Customers.Update("CUS_bq58eabsts5xvhc", "BILL", "Gate Williams III", "08068287222")
+                .Print();
 
-        private static void CustomerFetch() =>
-            _api.Customers.Fetch("CUS_kwsmfqylmt5lrb8").Print();
+        private static void CustomerFetch() => _api.Customers.Fetch("CUS_kwsmfqylmt5lrb8").Print();
 
+        private static void CustomersList() => _api.Customers.List().Print();
 
-        private static void CustomersList() =>
-            _api.Customers.List().Print();
-
-
-        private static void TransactionExport_Setup() =>
-            _api.Transactions.Export().Print();
-
+        private static void TransactionExport_Setup() => _api.Transactions.Export().Print();
 
         private static void TransactionTotals_Setup()
         {
             var response = _api.Transactions.Totals();
             Console.WriteLine(
-                JsonConvert.SerializeObject(response, Formatting.Indented, PayStackApi.SerializerSettings)
+                JsonConvert.SerializeObject(
+                    response,
+                    Formatting.Indented,
+                    PayStackApi.SerializerSettings
+                )
             );
         }
 
         private static void TransactionTimeline_Setup() =>
             _api.Transactions.Timeline("540314").Print();
 
-        private static void TransactionFetch_Setup() =>
-            _api.Transactions.Fetch("540314").Print();
+        private static void TransactionFetch_Setup() => _api.Transactions.Fetch("540314").Print();
 
-
-        private static void TransactionList_Setup() =>
-            _api.Transactions.List().Print();
+        private static void TransactionList_Setup() => _api.Transactions.List().Print();
 
         private static void TransactionList_Filtered_Setup()
         {
@@ -215,14 +282,13 @@ namespace test_console
             _api.Transactions.List(request).Print();
         }
 
-
         private static void InitializeRequest_Setup()
         {
             var request = new TransactionInitializeRequest
             {
                 AmountInKobo = 900000,
                 Email = "adebisi-fa@live.com",
-                Reference = Guid.NewGuid().ToString() // or your custom reference
+                Reference = Guid.NewGuid().ToString(), // or your custom reference
             };
 
             // Add customer fields
@@ -258,7 +324,11 @@ namespace test_console
             (request as IPreparable)?.Prepare();
 
             Console.WriteLine(
-                JsonConvert.SerializeObject(request, Formatting.Indented, PayStackApi.SerializerSettings)
+                JsonConvert.SerializeObject(
+                    request,
+                    Formatting.Indented,
+                    PayStackApi.SerializerSettings
+                )
             );
         }
     }

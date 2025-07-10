@@ -231,3 +231,89 @@ For situations where some properties (`data.[property1][property2][...n]`) are n
 As a `String`, this value can be parsed using any .Net compatible JSON parser, for use.
 
 However, to make it easier to work this raw JSON (especially to remove the need for extra parsing before use), all `~Response` types has an extension method, `.AsJObject()`, which returns a `JObject` instance.  With this object, any property of the returned JSON can be retrieved as described on [this page](https://www.newtonsoft.com/json/help/html/QueryingLINQtoJSON.htm). 
+
+
+### `~Response` Enhancement (since v1.1.3)
+To ease parsing the `.RawJson` property, all `~Response` types expose the following generic extension methods: `.As<T>()` (alias `.ToObject<T>()`), `.DataAs<T>`, and (alias `.DataToObject<T>()`). These can be used as follows:
+
+```c#
+// Types
+class Bank
+{
+    public string name { get; set; }
+
+    // will match json 'code' property, not case sensitive.
+    public string coDe { get; set; }
+
+    [JsonProperty("slug")]
+    public string BankSlug { get; set; }
+}
+
+class CustomListBankResponse
+{
+    public bool Status { get; set; }
+    public string message { get; set; } // Not case sensitive
+    public IList<Bank> data { get; set; }
+}
+
+// METHOD 1: With Typed Response
+Console.WriteLine("Method 1:");
+var response = _api.Miscellaneous.ListBanks();
+foreach (var b in response.Data.Take(2)) // First two(2) banks
+    Console.WriteLine($"[{b.Code}] {b.Name} {b.Slug}");
+Console.WriteLine("Status: {0}", response.Status); // should be "True"
+Console.WriteLine();
+
+// METHOD 2: With Custom Types or dynamic
+
+// Example 1: Parse the response's data to a custom list of Banks
+Console.WriteLine("Method 2.1: Response's data parsing");
+var banks = response.DataAs<IList<Bank>>();
+foreach (var b in banks.Take(2)) // First two(2) banks.
+    Console.WriteLine($"[{b.coDe}] {b.name} {b.BankSlug}");
+Console.WriteLine();
+
+// Example 2: Parse the full response to a custom type
+Console.WriteLine("Method 2.2: Full response parsing via Custom Type.");
+var customResponse = response.As<CustomListBankResponse>();
+foreach (var b in customResponse.data.Take(2)) // First two(2) banks.
+    Console.WriteLine($"[{b.coDe}] {b.name} {b.BankSlug}");
+Console.WriteLine("Status: {0}", customResponse.Status); // should be "True"
+Console.WriteLine();
+
+// Example 3: Parse the full response json to a dynamic
+Console.WriteLine("Method 2.3: Full response parsing via dynamic");
+var customResponseDynamic = response.As<dynamic>();
+var firstTwoBanks = ((IEnumerable<dynamic>)customResponseDynamic.data).Take(2); // First two(2) banks.
+foreach (var b in firstTwoBanks)
+    // For dynamic, properties (including nested) must be used as it appeared in the raw json
+    Console.WriteLine($"[{b.code}] {b.name} {b.slug}");
+Console.WriteLine("Status: {0}", customResponseDynamic.status); // should be "True"
+Console.WriteLine();
+
+/* Output
+~/src/test-console$ dotnet run
+
+Method 1:
+[120001] 9mobile 9Payment Service Bank 9mobile-9payment-service-bank-ng
+[404] Abbey Mortgage Bank abbey-mortgage-bank-ng
+Status: True
+
+Method 2.1: Response's data parsing
+[120001] 9mobile 9Payment Service Bank 9mobile-9payment-service-bank-ng
+[404] Abbey Mortgage Bank abbey-mortgage-bank-ng
+
+Method 2.2: Full response parsing via Custom Type.
+[120001] 9mobile 9Payment Service Bank 9mobile-9payment-service-bank-ng
+[404] Abbey Mortgage Bank abbey-mortgage-bank-ng
+Status: True
+
+Method 2.3: Full response parsing via dynamic
+[120001] 9mobile 9Payment Service Bank 9mobile-9payment-service-bank-ng
+[404] Abbey Mortgage Bank abbey-mortgage-bank-ng
+Status: True
+
+*/
+
+```
+

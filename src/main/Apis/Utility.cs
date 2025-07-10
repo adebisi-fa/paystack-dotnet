@@ -14,6 +14,22 @@ namespace PayStack.Net
             return JObject.Parse(response.RawJson);
         }
 
+        public static T As<T>(this IHasRawResponse response) => response.AsJObject().ToObject<T>();
+
+        // Alias for: As<T>()
+        public static T ToObject<T>(this IHasRawResponse response) => response.As<T>();
+
+        public static T DataAs<T>(this IHasRawResponse response)
+        {
+            var jo = response.AsJObject();
+            if (jo["data"] == null)
+                return default(T);
+            return jo["data"].ToObject<T>();
+        }
+
+        // Alias for: DataAs<T>()
+        public static T DataToObject<T>(this IHasRawResponse response) => response.DataAs<T>();
+
         public static TD PopulateWith<TS, TD>(this TD destination, TS source)
         {
             var sourceType = typeof(TS);
@@ -26,7 +42,11 @@ namespace PayStack.Net
                 if (sourceProperty == null)
                     continue;
 
-                destinationProperty.SetValue(destination, sourceProperty.GetValue(source, null), null);
+                destinationProperty.SetValue(
+                    destination,
+                    sourceProperty.GetValue(source, null),
+                    null
+                );
             }
 
             foreach (var destinationField in destinationType.GetFields())
