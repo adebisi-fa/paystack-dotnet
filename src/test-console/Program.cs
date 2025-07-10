@@ -151,7 +151,6 @@ namespace test_console
             // will match json 'code' property, not case sensitive.
             public string coDe { get; set; }
 
-
             [JsonProperty("slug")]
             public string BankSlug { get; set; }
         }

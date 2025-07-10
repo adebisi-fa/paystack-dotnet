@@ -4,7 +4,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>Paystack.Net</PackageId>
     <Title>PayStack API for .Net</Title>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
     <Authors>Adebisi Foluso A.</Authors>
     <Company />
     <Product>PayStack.Net</Product>
@@ -16,6 +16,10 @@
     <PackageIcon>paystack-logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
+    -- v1.1.3 -- 
+    * Feat: Flexible Custom Response types. (see "~Response Enhanacement" in README)
+    * Refactor: Use CSharpier (a dotnet cli tool) for code formatting.
+
     -- v1.1.2 --
     * Fix: HTTP GET RequestDTOs' serialization to query string. (Gracias @teghoz!)
     * Fix: TransactionList.Meta's TotalVolume type change from Int32 to Int64. (Thanks @teghoz!)
